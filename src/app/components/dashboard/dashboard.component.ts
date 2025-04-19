@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TestesService } from '../../services/testes.service';
 import { environment } from '../../../environments/environment.development';
+import { ClientService } from '../../services/client.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,22 +10,19 @@ import { environment } from '../../../environments/environment.development';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  ws = new WebSocket('ws://localhost:' + environment.port);
-  message: string = "";
+  message: string = '';
 
-  constructor() {
+  constructor(private getClientService: ClientService) {
 
   }
 
   ngOnInit() {
-    this.ws.addEventListener('open', () => {
-      console.log('WebSocket connection opened');
-    });
+
   }
 
   sendMessage() {
-    this.ws.send(this.message);
-    this.message = "";
+    this.getClientService.sendMessageToServer(this.message);
+    this.message = '';
   }
 
 }

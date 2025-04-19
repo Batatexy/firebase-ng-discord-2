@@ -3,5 +3,5 @@ export const environment = {
 
     },
 
-    port: 4200,
+    port: 8080,
 };
