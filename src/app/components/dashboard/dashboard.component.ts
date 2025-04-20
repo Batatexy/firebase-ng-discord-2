@@ -12,9 +12,8 @@ import { ClientService } from '../../services/client.service';
 export class DashboardComponent {
   message: string = '';
 
-  constructor(private getClientService: ClientService) {
+  constructor(private getClientService: ClientService) { }
 
-  }
 
   ngOnInit() {
 

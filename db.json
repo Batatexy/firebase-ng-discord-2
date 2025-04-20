@@ -1,1 +1,66 @@
-{}
+{
+    "users": 
+    [
+        {
+            "userID": 1,
+            "tag": "34VASDF3234",
+            "userName": "Cleber",
+            "description": "",
+            "status": 1,
+            "profilePicture": "",
+
+            "email": "",
+            "password": ""
+        },
+        {
+            "userID": 2,
+            "tag": "ASDF42353",
+            "userName": "jonas",
+            "description": "",
+            "status": 2,
+            "profilePicture": "",
+
+            "email": "",
+            "password": ""
+        }
+    ],
+
+    "chats":
+    [
+        {
+            "chatID": 1,
+            "users": [1,2],
+            "messages": 
+            [
+                {
+                    "messageID": 1,
+                    "userID": 1,
+                    "text": "algo",
+                    "data": "20/20/2023",
+                    "time": "34564535"
+                },
+                {
+                    "messageID": 2,
+                    "userID": 1,
+                    "text": "kogama 2",
+                    "data": "20/20/2023",
+                    "time": "34564535"
+                },
+                {
+                    "messageID": 3,
+                    "userID": 2,
+                    "text": "323423432",
+                    "data": "20/20/2023",
+                    "time": "34564535"
+                },
+                {
+                    "messageID": 4,
+                    "userID": 1,
+                    "text": "vandelreisaon é um jogo",
+                    "data": "20/20/2023",
+                    "time": "34564535"
+                }
+            ]
+        }
+    ]
+}

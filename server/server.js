@@ -1,5 +1,7 @@
 // node "server/server.js"
 
+const { log } = require('console');
+
 //Importa o express
 const http = require('http').createServer();
 
@@ -12,6 +14,7 @@ const io = require('socket.io')(http, {
 
 //Recebe a conexão do cliente
 io.on('connection', (socket) => {
+    log(typeof socket);
     console.log('New client connected');
 
     //Recebe a mensagem do cliente

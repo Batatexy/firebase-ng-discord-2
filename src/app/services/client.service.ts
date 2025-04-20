@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { WebSocket } from 'ws';
 import io from 'socket.io-client';
-import { environment } from '../../environments/environment.development';
 import { Message } from '../models/message';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ClientService {
-  socket = io('ws://localhost:8080');
+  private socket = io('ws://localhost:8080');
 
   constructor() {
     //Recebe mensagens do servidor
@@ -31,11 +31,30 @@ export class ClientService {
   //Enviar mensagem para o servidor
   sendMessageToServer(text: string) {
     const message: Message = {
+      messageID: '',
       userID: 1,
       text: text,
     }
     this.socket.emit('message', message);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
