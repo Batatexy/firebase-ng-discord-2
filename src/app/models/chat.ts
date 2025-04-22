@@ -1,5 +1,7 @@
+import { Message } from "./message";
+
 export type Chat = {
-    chatID: number;
-    users: number[];
-    messages: number[];
+    id: number;
+    usersIDs: Array<string>;
+    messagesIDs: Array<string>;
 };

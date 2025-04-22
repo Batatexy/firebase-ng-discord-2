@@ -1,0 +1,21 @@
+.register-component{
+    color:var(--text-default-color);
+}
+
+input {
+    color:var(--text-default-color);
+    background-color:var(--foreground-default-color);
+}
+
+input::placeholder {
+    color:var(--text-placeholder-color);
+}
+
+input:focus {
+    color:var(--text-default-color);
+    background-color:var(--foreground-default-color);
+}
+
+.register-button{
+    width: 5rem;
+}

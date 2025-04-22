@@ -1,0 +1,88 @@
+{
+    "pages": 
+    {
+        "home": "Home",
+        "movies": "Filmes",
+        
+        "register": "Registrar",
+        "login": "Login",
+        "logout": "Sair"
+    },
+
+    "configurations": 
+    {
+        "themes": {"theme": "Tema", "light": "Claro", "dark": "Escuro"},
+        "language": "Linguagem"
+    },
+
+    "defaultThings":
+    {
+        "seeMore": "Ver Mais",
+        "required": "Obrigatório",
+        "optional": "Opcional",
+        "close": "Fechar"
+    },
+
+    "toast":
+    {
+        "success": "Sucesso",
+        "reviewSent": "Sua análise foi enviada!",
+        "failed": "Fracasso",
+        "reviewNotSent": "Houve um erro no envio de sua análise"
+    },
+
+    "notFoundPage":
+    {
+        "notFound": "Página não Encontrada",
+        "backToMovies": "Voltar aos Filmes"
+    },
+
+    "home":
+    {
+        "createYourList": "Crie sua lista de filmes",
+        "saveYourMovies": "Salve seus filmes favoritos e fique por dentro de todos os detalhes.",
+        "seeMovies": "Ver filmes",
+        "yourFavoriteMovies": "Seus Filmes Favoritos"
+    },
+
+    "moviesPage":
+    {
+        "listedMovie": "Filme Listado",
+        "listedMovies": "Filmes Listados",
+        "noListedMovies": "Nenhum Filme Encontrado"
+    },
+
+    "searchBar": 
+    {
+        "searchMovie": "Busque um Filme"
+    },
+        
+    "movieDetailsPage":
+    {
+        "directedBy": "Dirigido por",
+        "releasedIn": "Lançado em",
+
+        "cast": "Elenco",
+        "crew": "Equipe de Produção",
+
+        "synopsis": "Sinopse",
+
+        "reviews": "Reviews",
+        "noReviews": "Ainda não há nenhuma Review deste filme",
+
+        "publishedIn": "Publicado em",
+        "watchedIn": "Assistiu em",
+
+        "review":
+        {
+            "writeReviewAbout": "Escreva Uma Review Sobre",
+            "writeReviewInput": "Digite o que achou sobre",
+            "writeReviewInputInvalid": "Digite uma análise com pelo menos 3 caracteres",
+
+            "watchedDate": "Data que viu o Filme",
+            "watchedDateInvalid": "Insira uma data Válida",
+
+            "submitReview": "Enviar Review"
+        }
+    }
+}

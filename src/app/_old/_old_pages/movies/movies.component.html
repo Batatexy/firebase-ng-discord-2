@@ -1,0 +1,56 @@
+<app-search-area />
+
+<p class="listed-movies work-sans pt-2">
+    {{createZeroBeforeNumbers(getMoviesByName().length)}} 
+
+    @if(pluralizeMovies())
+    {
+        {{"moviesPage.listedMovies" | translate}}
+    }
+    @else 
+    {
+        {{"moviesPage.listedMovie" | translate}}
+    }
+</p>
+
+@if(getMoviesByName().length > 0)
+{
+    <app-white-card class="d-flex justify-content-center">
+        <ng-container content>
+            <div class="movies d-flex flex-wrap justify-content-center w-100">
+                <!-- Limitar a lista, ao apertar ver mais, ir aumentando este limite -->
+    
+                
+                @for (movie of getMoviesByName(); track $index) 
+                {
+                    <app-movie-card [movie]="movie"/>
+                }
+                
+            </div>
+        </ng-container>
+    </app-white-card>
+}
+@else 
+{
+    <div class="movie-not-found d-flex flex-column align-items-center justify-content-center">
+        <p>{{"moviesPage.noListedMovies" | translate}}</p>
+    </div>
+}
+
+
+@if(haveMoviesToGet() && getMoviesByName().length > 0)
+{
+    <section class="see-more d-flex justify-content-center pt-4 w-100">
+        <app-common-action-button className="blue border-6 see-more-movies" [actionFunction]="increaseMovieRange">
+            <ng-container content>
+                
+                {{"defaultThings.seeMore" | translate}} <i class="bi bi-arrow-down"></i>
+                
+            </ng-container>
+        </app-common-action-button>
+    </section>
+}
+
+
+
+

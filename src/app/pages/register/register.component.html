@@ -1,0 +1,34 @@
+<div class="container">
+    <form class="" id="login" [formGroup]="registerFormGroup" (ngSubmit)="submitRegister()">
+
+        <legend>Register</legend>
+
+        <div class="pt-2">
+            <label for="userTag">Tag:</label>
+            <input class="form-control border-1 border-primary" id="userTag" type="text" name="userTag"
+                formControlName="userTag" [(ngModel)]="userTagModel">
+        </div>
+
+        <div class="pt-2">
+            <label for="userName">NickName:</label>
+            <input class="form-control border-1 border-primary" id="userName" type="text" name="userName"
+                formControlName="userName" [(ngModel)]="userNameModel">
+        </div>
+
+        <div class="pt-2">
+            <label for="userEmail">Email:</label>
+            <input class="form-control border-1 border-primary" id="userEmail" type="email" name="userEmail"
+                formControlName="userEmail" [(ngModel)]="userEmailModel">
+        </div>
+
+        <div class="pt-2">
+            <label for="userPassword">Password:</label>
+            <input class="form-control border-1 border-primary" id="userPassword" type="password" name="userPassword"
+                formControlName="userPassword" [(ngModel)]="userPasswordModel">
+        </div>
+
+        <button class="btn btn-primary mt-2" type="submit">
+            Register
+        </button>
+    </form>
+</div>

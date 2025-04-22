@@ -1,66 +1,49 @@
 {
-    "users": 
-    [
-        {
-            "userID": 1,
-            "tag": "34VASDF3234",
-            "userName": "Cleber",
-            "description": "",
-            "status": 1,
-            "profilePicture": "",
-
-            "email": "",
-            "password": ""
-        },
-        {
-            "userID": 2,
-            "tag": "ASDF42353",
-            "userName": "jonas",
-            "description": "",
-            "status": 2,
-            "profilePicture": "",
-
-            "email": "",
-            "password": ""
-        }
-    ],
-
-    "chats":
-    [
-        {
-            "chatID": 1,
-            "users": [1,2],
-            "messages": 
-            [
-                {
-                    "messageID": 1,
-                    "userID": 1,
-                    "text": "algo",
-                    "data": "20/20/2023",
-                    "time": "34564535"
-                },
-                {
-                    "messageID": 2,
-                    "userID": 1,
-                    "text": "kogama 2",
-                    "data": "20/20/2023",
-                    "time": "34564535"
-                },
-                {
-                    "messageID": 3,
-                    "userID": 2,
-                    "text": "323423432",
-                    "data": "20/20/2023",
-                    "time": "34564535"
-                },
-                {
-                    "messageID": 4,
-                    "userID": 1,
-                    "text": "vandelreisaon é um jogo",
-                    "data": "20/20/2023",
-                    "time": "34564535"
-                }
-            ]
-        }
-    ]
+  "users": [
+    {
+      "id": "1547",
+      "tag": "123",
+      "name": "Jon",
+      "description": "Hello, im new here!",
+      "status": 1,
+      "profilePicture": "",
+      "email": "8274a9208b34804dde288298e2e99dfeae7c477ba698f7fb1907285263d70997",
+      "password": "bb472edb86809a761936d90c70aeb4346618aa71da7a00c16e334863499108fd",
+      "chats": [
+        0
+      ]
+    },
+    {
+      "id": "5d21",
+      "tag": "321",
+      "name": "Pedrao",
+      "description": "Hello, im new here!",
+      "status": 1,
+      "profilePicture": "",
+      "email": "bfc3eb8fd7d1141431e7a8e8fc6c148d4c197c5a9bc4a1d08dbd1a76cd1f76c6",
+      "password": "ee5cd7d5d96c8874117891b2c92a036f96918e66c102bc698ae77542c186f981",
+      "chats": [
+        0
+      ]
+    }
+  ],
+  "chats": [
+    {
+      "id": 0,
+      "usersIDs": [
+        "5d21",
+        "1547"
+      ],
+      "messagesIDs": []
+    }
+  ],
+  "messages": [
+    {
+      "id": "ae84",
+      "userID": "1547",
+      "text": "sadas",
+      "edited": false,
+      "deleted": false
+    }
+  ]
 }

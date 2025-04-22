@@ -1,0 +1,35 @@
+@defer()
+{
+    <div class="movie-card pb-2">
+        <a routerLink="/movie/{{movie.id}}">
+            <img class="movie-image image-border" src="{{getImagesUrl()}}{{movie.poster_path}}">
+        </a>
+        
+        <div class="row">
+            <div class="col-10">
+                <h3 class="pt-2 font-24 work-sans font-bold mb-1">{{movie.title}}</h3>
+                <p class="work-sans">{{movie.release_date | date:'longDate' : '' : getSelectedLanguage()}}</p>
+            </div>
+            <div class="col-2 d-flex flex-column justify-content-center">
+                <button class="heart-button btn d-flex justify-content-center align pt-1 pb-1" (click)="setFavoriteMovie(movie)">
+                    @if(getLikedState())
+                    {
+                        <i class="bi-heart-fill"></i>
+                    }
+                    @else
+                    {
+                        <i class="bi-heart"></i>
+                    }
+                </button>
+            </div>
+            
+        </div>
+    </div>
+}
+
+@placeholder 
+{
+    <div class="movie-card placeholder-glow pb-2">
+        <img src="../../../assets/images/img-placeholder.png" class="movie-image image-border placeholder">
+    </div>
+}

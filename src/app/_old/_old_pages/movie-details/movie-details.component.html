@@ -1,0 +1,311 @@
+<!-- Detalhes do Filme -->
+<section class="d-flex flex-lg-row flex-column">
+    <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
+    <app-white-card class="movie-detail-image pb-3">
+        <ng-container content>
+            <div class="d-flex flex-column flex-xl-row">
+
+                <div class="d-flex flex-column p-3">
+                    <img src="{{getImagesUrl()}}{{getMovie()?.poster_path}}" class="image-border ">
+                   
+                    <!-- Note Badge / Nome do Autor e Data do Filme -->
+                    <div class="d-flex mt-3 align-items-center">
+                        <!-- Alguma bruxaria faz com que, quando ponho a classe de bold, ele remove o Bold -->
+                        
+                        <div class="d-flex flex-column">
+                            <p class="m-0 inter">{{"movieDetailsPage.directedBy" | translate}} <b>
+
+                                @for (director of credits?.crew; track $index) 
+                                {
+                                    @if(director.job == "Director"){
+                                        {{director.name}}
+                                    }
+                                }
+
+                            </b></p>
+                            <p class="m-0 inter">{{"movieDetailsPage.releasedIn" | translate}} {{ getMovie()?.release_date| date:'longDate'}}</p>
+                        </div>
+                    </div>
+                    <!-- Note Badge / Nome do Autor e Data do Filme -->
+                </div>
+
+                
+
+
+                <!-- Genre Badges -->
+                <div class="badges-genres d-flex flex-wrap align-content-start">
+                    @for (genres of getMovie()?.genres; track $index)
+                    {
+                        <app-badge class="gender-badge inter font-20 mt-3">
+                            <ng-container content >
+                                <p class="m-0 font-bold">{{genres.name}}</p>
+                            </ng-container>
+                        </app-badge>
+                    }
+                </div>
+                <!-- Genre Badges -->
+            </div>
+
+        </ng-container>
+    </app-white-card>
+    <!-- Card da Imagem, Nome do Diretor e Data do Filme -->
+
+    <!-- Atores e Sinopse -->
+    <div class="movie-detail-actors d-flex flex-column pb-3">
+        <!-- Elenco -->
+        <app-white-card class="pb-4 pt-1 pt-sm-0">
+            <ng-container content>
+                <div class="d-flex flex-column p-3 w-100">
+                    <h4 class="work-sans font-24 font-bold">
+                        {{"movieDetailsPage.cast" | translate}}
+                    </h4>
+    
+                    <!-- Atores -->
+                     <div class="row">
+                        @for (actor of getCastSliced(); track $index)
+                        {
+                            <app-avatar class="col-12 col-md-6 col-lg-12 col-xxl-6 pt-0 pt-3" [actor]="actor" nameClassName="font-bold" imageClassName="height-4">
+                                <ng-container name>
+                                    {{actor.character}}
+                                </ng-container>
+                                    
+                                <ng-container subName>
+                                    {{actor.name}}
+                                </ng-container>
+                            </app-avatar>
+                        }
+                     </div>
+                    <!-- Atores -->
+                     
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="custom-movies-button see-more-actors blue" data-bs-toggle="modal" data-bs-target="#actorsModal">
+                            {{"defaultThings.seeMore" | translate}} +
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </app-white-card>
+        <!-- Elenco -->
+
+        <!-- Sinopse -->
+        <app-white-card class="">
+            <ng-container content>
+                <div class="p-3">
+                    <h3 class="work-sans font-24 font-bold">{{"movieDetailsPage.synopsis" | translate}}</h3>
+                    <p class="work-sans">
+                        {{getMovie()?.overview}}
+                    </p>
+                </div>
+            </ng-container>
+        </app-white-card>
+        <!-- Sinopse -->
+    </div>
+    <!-- Atores e Sinopse -->
+</section>
+<!-- Detalhes do Filme -->
+
+<!-- Nova Review -->
+ @if (reviewAlreadyUploaded())
+ {
+    <section class="pt-3 pb-4" >
+        <form [formGroup]="newReview" (ngSubmit)="submitReview()" id="new-review">
+            <legend class="text-center">{{"movieDetailsPage.review.writeReviewAbout" | translate}} <b>{{getMovie()?.title}}</b>:</legend>
+
+            <div class="d-flex justify-content-center">
+                <div class="stars text-warning font-24">
+                    <div class="star-buttons">
+                        @for (button of ratingArray.concat(ratingArray); track $index) 
+                        {
+                            <button type="button"
+                                (click)="setRating($index + 1)"
+                                (mouseenter)="calculateStars($index + 1)"
+                                (mouseleave)="starsReset()">
+                            </button>
+                        }
+                    </div>
+        
+                    <div>
+                        @for (star of ratingArray; track $index) 
+                        {
+                            @switch (star.state) 
+                            {
+                                @case ("fill") {<i class="bi bi-star-fill"></i>}
+                                @case ("half") {<i class="bi bi-star-half"></i>}
+                                @default {<i class="bi bi-star"></i>}
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-3 pb-3">
+                <div class="d-flex justify-content-center pb-1">
+                    <textarea 
+                        class="review-field col-4 text-center form-control" id="reviewContent" type="text" name="reviewContent" 
+                        placeholder="({{'defaultThings.required' | translate}}) {{'movieDetailsPage.review.writeReviewInput' | translate}} {{getMovie()?.title}}" 
+                        formControlName="reviewContent" [(ngModel)]="reviewContentModel">
+                    </textarea>
+                </div>
+                
+                <p *ngIf="newReview.get('reviewContent')?.invalid && newReview.get('reviewContent')?.touched" class="text-danger">
+                    {{"movieDetailsPage.review.writeReviewInputInvalid" | translate}}
+                </p>
+            </div>
+                       
+            <div class="text-center">
+                <label class="pe-2" for="watchedDate" >({{'defaultThings.optional' | translate}}) {{'movieDetailsPage.review.watchedDate' | translate}}: </label>
+                <input id="watchedDate" name="watchedDate" type="date" formControlName="watchedDate" [(ngModel)]="watchedDateModel">
+    
+                <p *ngIf="newReview.get('watchedDate')?.invalid && newReview.get('watchedDate')?.touched" class="text-danger">
+                    {{"movieDetailsPage.review.watchedDateInvalid" | translate}}
+                </p>
+            </div>
+    
+            <div class="d-flex justify-content-center pt-3">
+                <div class="text-center">
+                    <button class="custom-movies-button blue" type="submit" [disabled]="newReviewInvalid">{{'movieDetailsPage.review.submitReview' | translate}}</button>
+                </div>
+            </div>
+        </form>
+    </section>
+ }
+<!-- Nova Review -->
+
+<app-toast [show]="showToast" [reviewStatus]="reviewStatus" (eventEmitterShowStatus)="setShowToast($event)">
+    <ng-container alert>
+        @if (reviewStatus == "success")
+        {
+            {{"toast.success" | translate}}
+        }
+        @else 
+        {
+            {{"toast.failed" | translate}}
+        }
+    </ng-container>
+    
+    <ng-container content >
+        @if (reviewStatus == "success")
+        {
+            {{"toast.reviewSent" | translate}}
+        }
+        @else 
+        {
+            {{"toast.reviewNotSent" | translate}}
+        }
+    </ng-container>
+</app-toast>
+
+
+
+<!-- Reviews -->
+<h3 class="text-center pb-2 pt-3">{{'movieDetailsPage.reviews' | translate}}</h3>
+
+<section class="d-flex flex-wrap justify-content-center">
+    
+
+    @for (review of getReviewsSliced(); track $index)
+    {
+        <div class="review-card">
+            <app-review [review]="review"/>
+        </div>
+    }
+
+    @if (haveReviewsToGet() == "show")
+    {
+        <div class="container d-flex justify-content-center ">
+            <app-common-action-button className="blue border-6 see-more-reviews" [actionFunction]="seeMoreReviews">
+                <ng-container content>
+                    
+                    {{'defaultThings.seeMore' | translate}}
+                    
+                </ng-container>
+            </app-common-action-button>
+        </div>
+    }
+    @else 
+    {
+        @if(haveReviewsToGet() == "null"){
+            <p>
+                {{'movieDetailsPage.noReviews' | translate}}
+            </p>
+        }
+    }
+</section>
+ <!-- Reviews -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<app-modal [id]="'actorsModal'">
+    <ng-container modalTitle>
+        <b>{{'movieDetailsPage.cast' | translate}}</b>
+    </ng-container>
+
+    <ng-container modalContent>
+        <div class="row">
+            @for (actor of getCast(); track $index)
+            {
+                <div class="col-sm-6 col-lg-4 col-12 p-1">
+                    <app-avatar class="pt-0 pt-3" [actor]="actor" nameClassName="font-bold" imageClassName="height-4">
+                        <ng-container name>
+                            {{actor.character.substring(0, nameLength)}}
+                        </ng-container>
+                            
+                        <ng-container subName>
+                            {{actor.name.substring(0, nameLength)}}
+                        </ng-container>
+                    </app-avatar>
+                </div>
+            }
+        </div>
+
+
+        <h5 class="mt-5"><b>{{'movieDetailsPage.crew' | translate}}</b></h5>
+
+        <div class="modal-footer mt-4">
+        </div>
+
+        <div class="row">
+            @for (crew of getCrew(); track $index)
+            {
+                <div class="col-sm-6 col-lg-4 col-12 p-1">
+                    <app-avatar class="pt-0 pt-3" [crew]="crew" nameClassName="font-bold" imageClassName="height-4">
+                        <ng-container name>
+                            {{crew.name}}
+                        </ng-container>
+                    </app-avatar>
+                </div>
+            }
+        </div>
+    </ng-container>
+</app-modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

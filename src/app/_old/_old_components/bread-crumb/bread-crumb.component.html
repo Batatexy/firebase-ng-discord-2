@@ -1,0 +1,11 @@
+@for (path of pathArray; track $index) 
+{
+    <a class="bread-crumb font-14 work-sans" [ngClass]="{'font-bold' : $index == pathArray.length-1}"  [routerLink]="path">
+        <app-header-translations [path]="path" />
+    </a>
+
+    @if($index < pathArray.length-1)
+    {
+        <label>-</label>
+    }
+}

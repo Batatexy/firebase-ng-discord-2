@@ -1,0 +1,88 @@
+{
+    "pages": 
+    {
+        "home": "Home",
+        "movies": "Movies",
+        
+        "register": "Register",
+        "login": "Login",
+        "logout": "Logout"
+    },
+
+    "configurations": 
+    {
+        "themes": {"theme": "Theme", "light": "Light", "dark": "Dark"},
+        "language": "Language"
+    },
+
+    "defaultThings":
+    {
+        "seeMore": "See More",
+        "required": "Required",
+        "optional": "Optional",
+        "close": "Close"
+    },
+
+    "toast":
+    {
+        "success": "Success",
+        "reviewSent": "Your review has been sent!",
+        "failed": "Failure",
+        "reviewNotSent": "There was an error sending your review"
+    },
+
+    "notFoundPage":
+    {
+        "notFound": "Page Not Found",
+        "backToMovies": "Back to Movies"
+    },
+
+    "home":
+    {
+        "createYourList": "Create Your Movie List",
+        "saveYourMovies": "Save your favorite movies and stay updated on all the details.",
+        "seeMovies": "See Movies",
+        "yourFavoriteMovies": "Your Favorite Movies"
+    },
+
+    "moviesPage":
+    {
+        "listedMovie": "Listed Movie",
+        "listedMovies": "Listed Movies",
+        "noListedMovies": "No Movies Found"
+    },
+
+    "searchBar": 
+    {
+        "searchMovie": "Search a Movie"
+    },
+        
+    "movieDetailsPage":
+    {
+        "directedBy": "Directed by",
+        "releasedIn": "Released in",
+
+        "cast": "Cast",
+        "crew": "Production Crew",
+
+        "synopsis": "Synopsis",
+
+        "reviews": "Reviews",
+        "noReviews": "No reviews yet for this movie",
+
+        "publishedIn": "Published in",
+        "watchedIn": "Watched on",
+
+        "review":
+        {
+            "writeReviewAbout": "Write a Review About",
+            "writeReviewInput": "Enter your thoughts on",
+            "writeReviewInputInvalid": "Enter a review with at least 3 characters",
+
+            "watchedDate": "Date you watched the Movie",
+            "watchedDateInvalid": "Enter a valid date",
+
+            "submitReview": "Submit Review"
+        }
+    }
+}

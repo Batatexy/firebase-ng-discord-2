@@ -1,0 +1,104 @@
+.movie-card{
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    width:20rem;
+    
+}
+
+.movie-image{
+    width: 100%;
+    height: 100%;
+    
+    transition: transform 0.25s ease-in-out;
+}
+
+.movie-image:hover .movie-card{
+    padding-right: 0;
+    padding-left: 0;
+    width:10rem;
+}
+
+.movie-image:hover{
+    transform: scale(1.05);
+}
+
+.movie-image:active{
+    transform: scale(1);
+}
+
+
+.bi-heart-fill{
+    color:red
+}
+
+.heart-button{
+    color: var(--text-default-color);
+    transition: transform 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.heart-button:hover{
+    color:red;
+    transform: scale(1.3);
+}
+
+.heart-button:active{
+    border:1px solid transparent;
+    transform: scale(1);
+}
+
+@media (max-width:1600px)
+{
+    .movie-card{
+        width:16rem;
+    }
+}
+
+@media (max-width:900px)
+{
+    .movie-card{
+        width:14rem;
+    }
+}
+
+@media (max-width:770px)
+{
+    .movie-card{
+        width:13rem;
+    }
+}
+
+@media (max-width:740px)
+{
+    .movie-card{
+        width:12rem;
+    }
+}
+
+@media (max-width:705px)
+{
+    .movie-card{
+        width:11rem;
+    }
+}
+
+@media (max-width:675px)
+{
+    .movie-card{
+        width:10rem;
+    }
+}
+
+@media (max-width:640px)
+{
+    .movie-card{
+        width:9rem;
+    }
+}
+
+@media (max-width:610px)
+{
+    .movie-card{
+        width:100%;
+    }
+}

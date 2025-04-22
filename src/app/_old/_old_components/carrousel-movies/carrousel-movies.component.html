@@ -1,0 +1,32 @@
+
+    <div [id]="id" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="movies d-flex flex-wrap justify-content-center w-100">
+                    @for (movie of movies.slice(0, movieSlice); track $index) 
+                    {
+                        <app-movie-card [movie]="movie"/>
+                    }
+                </div>
+            </div>
+    
+            @for (i of carrouselMovies(); track $index) 
+            {
+                <div class="carousel-item">
+                    <div class="movies d-flex flex-wrap justify-content-center w-100">
+                        @for (movie of movies.slice((($index * movieSlice) + movieSlice), ($index * movieSlice) + (movieSlice * 2)); track $index) 
+                        {
+                            <app-movie-card [movie]="movie"/>
+                        }
+                    </div>
+                </div>
+            }
+    
+        </div>
+        <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#'+id" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#'+id" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>

@@ -1,0 +1,25 @@
+<section>
+    <div class="toast" [ngClass]="
+    {
+        'show' : show, 
+        'success' : reviewStatus == 'success', 
+        'failed' : reviewStatus == 'failed'
+    }" 
+        role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">
+                <ng-content select="[alert]">
+    
+                </ng-content>
+            </strong>
+            
+            <app-close-button class="close-button" data-bs-dismiss="toast" aria-label="Close" (click)="sendShowStatus()"/>
+            
+        </div>
+        <div class="toast-body">
+            <ng-content select="[content]">
+                
+            </ng-content>
+        </div>
+    </div>
+</section>

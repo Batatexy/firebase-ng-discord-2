@@ -1,0 +1,21 @@
+.review{
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    padding-bottom: 1rem;
+    overflow-wrap: break-word;
+}
+
+.star-badge{
+    position: relative;
+    bottom:0.45rem;
+    left:0.15rem;
+    
+}
+
+@media (max-width:992px)
+{
+    .review{
+        padding-right: 0;
+        width: 100%;
+    }
+}

@@ -1,0 +1,34 @@
+<header>
+        <div>
+            <app-bread-crumb (pathArrayEmitter)="setTitle($event)"/>
+            
+            <h1 class="font-36 work-sans d-flex">
+                <b class="title">
+                    @if(getMovie())
+                    {
+                        {{getMovie()?.title}}
+                    }
+                    @else 
+                    {
+                        @if (title != "/"){
+                            <app-header-translations [path]="title"/>
+                        }
+                        
+                    }
+                </b>
+            
+                @if(getMovie())
+                {
+                    <div class="ps-3">
+                        <app-badge>
+                            <ng-container content>
+                                <i class="bi bi-star-fill text-warning pe-2"></i> {{divideByTwo(getMovie()?.vote_average).toFixed(1)}}
+                            </ng-container>
+                        </app-badge>
+                    </div>
+                }
+            </h1>
+        </div>
+    
+        <app-language-selector />
+</header>

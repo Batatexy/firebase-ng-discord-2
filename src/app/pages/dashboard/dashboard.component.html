@@ -1,0 +1,17 @@
+<h4>
+    Olá {{this.getUser()?.name}} | #{{this.getUser()?.tag}}
+</h4>
+
+<ul id="friends"></ul>
+
+<ul id="chats"></ul>
+
+<ul id="messages"></ul>
+
+<input type="text" placeholder="Envie uma mensagem" [(ngModel)]="message" (keydown.enter)="sendMessage()" />
+<button (click)="sendMessage()">Send</button>
+
+<br><br>
+
+<input type="text" placeholder="Adicionar Pessoa" [(ngModel)]="findUserTag" (keydown.enter)="sendUserTag()" />
+<button (click)="sendUserTag()">Send</button>

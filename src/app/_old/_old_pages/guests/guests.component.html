@@ -1,0 +1,131 @@
+@if(id != "null")
+{
+    @if (guest)
+    {
+        <div class="container">
+            <legend class="row">{{guest.name}}</legend>
+            
+            <div class="row border border-1 p-2">
+                <div class="col">
+                    <b>ID</b>
+                 </div>
+            
+                <div class="col">
+                    <b>Email</b>
+                </div>
+            
+                <div class="col">
+                    <b>Telefone</b>
+                </div>
+            
+                <div class="col">
+                    <b>CPF</b>
+                </div>
+            </div>
+
+            <div class="row border border-1 p-2">
+                <div class="col">
+                    {{guest.id}}
+                </div>
+        
+                <div class="col">
+                    {{guest.email}}
+                </div>
+        
+                <div class="col">
+                    @if(guest.phone.length == 11)
+                    {
+                        {{guest.phone | mask:"(00) 00000-0000"}}
+                    }
+                    @else 
+                    {
+                        {{guest.phone | mask:"(00) 0000-0000"}}
+                    }
+                </div>
+        
+                <div class="col" >
+                    {{guest.document | mask:"000.000.000-00"}}
+                </div>
+            </div>
+
+            <button class="row btn btn-primary me-4 mt-3" routerLink="/guestsForm/{{guest.id}}">
+                Editar
+            </button>
+    
+            <button class="row btn btn-danger mt-3" (click)="deleteGuest($event, guest)">
+                Deletar
+            </button>
+        </div>
+    }
+    @else
+    {
+        <legend class="text-center">Não existe nenhum Hóspede com este ID</legend>
+    }
+}
+@else 
+{
+    <div class="container">
+        <legend class="row">Hóspedes</legend>
+
+        <div class="row border border-1 p-2">
+            <div class="col">
+               <b>Nome</b>
+            </div>
+        
+            <div class="col">
+                <b>Email</b>
+            </div>
+        
+            <div class="col">
+                <b>Telefone</b>
+            </div>
+        
+            <div class="col">
+                <b>CPF</b>
+            </div>
+        
+            <div class="col">
+                <b>Ações</b>
+            </div>
+        </div>
+    
+
+        @for (guest of guests; track $index) 
+        {
+            <div class="row row-item border border-1 p-2" role="button" routerLink="/guests/{{guest.id}}">
+                <div class="col">
+                    {{guest.name}}
+                </div>
+
+                <div class="col">
+                    {{guest.email}}
+                </div>
+
+                <div class="col">
+                    @if(guest.phone.length == 11)
+                    {
+                        {{guest.phone | mask:"(00) 00000-0000"}}
+                    }
+                    @else 
+                    {
+                        {{guest.phone | mask:"(00) 0000-0000"}}
+                    }
+                </div>
+        
+                <div class="col" >
+                    {{guest.document | mask:"000.000.000-00"}}
+                </div>
+
+                <div class="col action-buttons">
+                    <button class="btn text-primary" (click)="$event.stopPropagation()" routerLink="/guestsForm/{{guest.id}}">
+                        <i class="bi bi-pen"></i>
+                    </button>
+                    
+                    <button class="btn text-danger" (click)="deleteGuest($event, guest)">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+}

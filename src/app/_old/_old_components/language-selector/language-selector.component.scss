@@ -1,0 +1,47 @@
+.configurations-button{
+    margin-top: -0.5rem;
+    margin-right: 0.25rem;
+    padding: 0.1rem;
+    color: var(--text-default-color);
+    font-size: 1.25rem;
+}
+
+button{
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+h6,
+button:not(.blue){
+    color: var(--text-default-color)
+}
+
+button:hover:not(.blue){
+    color: var(--text-default-color);
+    background-color: var(--background-default-color);
+}
+
+.blue:hover{
+    color: white;
+}
+
+.dropdown-menu{
+    background-color: var(--foreground-default-color);
+    color: var(--text-default-color)
+}
+
+.form-switch{
+    padding-left: 3.4rem;
+}
+
+.gear-icon{
+    transition: transform 0.25s ease-in-out;
+}
+
+.configurations-button:hover .gear-icon{
+    position: relative;
+    transform: rotate(-90deg);
+}
+
+.dropdown-menu{
+    font-size: 1rem;
+}

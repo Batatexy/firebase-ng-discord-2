@@ -1,0 +1,39 @@
+.magnifier-icon{
+    position: relative;
+    display: block;
+    width: 0.1rem;
+    
+    top: 1.5rem;
+    left: 1.3rem;
+    
+    //Remover o Gap que gera
+    margin: -0.5rem;
+}
+
+#search-movies{
+    padding-left: 2.5rem;
+    padding-bottom: 0.5rem;
+
+    background-color: var(--foreground-default-color);
+    color:var(--text-default-color);
+
+    
+    height: 2.75rem;
+    vertical-align: middle;
+    
+    border:0.1rem solid var(--default-color);
+}
+
+#search-movies::placeholder{
+    color:var(--searchbar-text-color);
+}
+
+#search-movies:focus{
+    box-shadow: 0 0 0 .2rem var(--transparent-searchbar-color);
+}
+
+.listed-movies{
+    padding-top:0.3rem;
+    padding-left:0.25rem;
+    color: #4B5563;
+}

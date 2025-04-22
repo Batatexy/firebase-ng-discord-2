@@ -1,0 +1,16 @@
+@if(path)
+{
+    @switch (path)
+    {
+        @case ("/") { {{"pages.home" | translate}} }
+        @case ("/movies") { {{"pages.movies" | translate}} }
+        <!-- Qualquer Número -->
+        @default
+        {
+            @if (path.includes("/movie/"))
+            {
+                {{getMovie()?.title}}
+            }
+        }
+    }
+}

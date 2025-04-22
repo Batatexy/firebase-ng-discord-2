@@ -1,11 +1,13 @@
 export type User = {
-    userID: number;
+    id?: string;
     tag: string;
-    userName: string;
+    name: string;
     description: string;
     status: number;
     profilePicture: string;
 
     email: string;
     password: string;
+
+    chats: Array<number>;
 };

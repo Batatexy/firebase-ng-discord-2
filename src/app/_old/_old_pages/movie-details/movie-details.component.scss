@@ -1,0 +1,149 @@
+.movie-detail-image{
+    padding-right:1rem;
+    width: 70%;
+}
+
+.movie-detail-image img{
+    width: 100%;
+}
+
+.movie-detail-actors{
+    padding-left:1rem;
+    width: 100%;
+}
+
+
+.star-badge{
+    width: 8rem;
+    height: 4.25rem;
+}
+
+.badges-genres{
+    padding-top:0.75rem;
+    margin-left:-0.1rem;
+    margin-right:-0.1rem;
+}
+
+.gender-badge{
+    height: 3rem;
+    margin-left:0.1rem;
+    margin-right:0.1rem;
+}
+
+.badges-genres{
+    flex-direction: column;
+}
+
+.see-more-actors{
+    width:7rem;
+    padding-top:0.75rem;
+    padding-bottom:0.75rem;
+}
+
+textarea{
+    background-color: var(--foreground-default-color);
+    color: var(--text-default-color)
+}
+
+textarea:focus{
+    background-color: var(--foreground-default-color);
+    color: var(--text-default-color)
+}
+
+textarea::placeholder{
+    color: rgb(150, 150, 150)
+}
+
+#watchedDate{
+    background-color: var(--foreground-default-color);
+    color: var(--text-default-color);
+    border:1px solid var(--text-default-color);
+    padding: 0.1rem;
+    margin: 0;
+}
+
+.stars button{
+    border: 1px solid transparent;
+    background-color: transparent;
+    margin: 0;
+    padding:0;
+
+    position: relative;
+    width: 0.76rem;
+    height: 1.75rem;
+}
+
+.star-buttons{
+    margin-bottom:-2.5rem;
+}
+
+
+.review-card{
+    width: 50%;
+}
+
+.review-field {
+    width: 70%;
+    height: 10rem;
+}
+
+//Mobile
+@media (max-width:576px)
+{
+    .movie-detail-image{
+        padding-right:0;
+        padding-bottom:1rem;
+        width: 100%;
+    }
+
+    .movie-detail-actors{
+        padding-left:0;
+        padding-top:0;
+        width: 100%;
+    }
+
+}
+
+@media (max-width:1600px)
+{
+    .movie-detail-image{
+        padding-right:0;
+        padding-bottom:1rem;
+        width: 100%;
+    }
+
+    .movie-detail-actors{
+        padding-right:0;
+        
+        padding-bottom:1rem;
+        width: 75%;
+    }
+
+    
+}
+
+@media (max-width:991.5px)
+{
+    .movie-detail-actors{
+        width: 100%;
+        padding-left:0;
+    }
+
+    .review-card{
+        width: 100%;
+    }
+
+    .review-field {
+        width: 100%;
+        height: 10rem;
+    }
+}
+
+
+@media (max-width:1199.5px)
+{
+
+    .badges-genres{
+        flex-direction: row;
+    }
+}

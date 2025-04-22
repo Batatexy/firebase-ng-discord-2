@@ -1,0 +1,42 @@
+<section class="register-component">
+    <!-- Novo Registro de Usuário -->
+<section class="pt-2" >
+    
+<form [formGroup]="newRegister" (ngSubmit)="submitRegister()" class="d-flex justify-content-center align-items-center" >
+    <div class="w-50">
+        <legend>Registrar</legend>
+
+        <div class="d-flex flex-column pb-2">
+            <label for="email" >Nome de Usuário: </label>
+            <input class="form-control" id="name" name="name" type="text" formControlName="name" [(ngModel)]="nameModel" placeholder="Digite seu Nome">
+
+            <p *ngIf="newRegister.get('name')?.invalid && newRegister.get('name')?.touched" class="text-danger">
+                Insira um nome com pelo menos 3 caracteres.
+            </p>
+        </div>
+    
+        <div class="d-flex flex-column pb-2">
+            <label for="email" >Endereço de Email: </label>
+            <input class="form-control" id="email" name="email" type="text" formControlName="email" [(ngModel)]="emailModel" placeholder="Digite seu Email">
+
+            <p *ngIf="newRegister.get('email')?.invalid && newRegister.get('email')?.touched" class="text-danger">
+                Insira um email válido.
+            </p>
+        </div>
+
+        <div class="d-flex flex-column pb-3">
+            <label for="password" >Senha: </label>
+            <input class="form-control" id="password" name="password" type="password" formControlName="password" [(ngModel)]="passwordModel" placeholder="Digite sua Senha">
+
+            <p *ngIf="newRegister.get('password')?.invalid && newRegister.get('password')?.touched" class="text-danger">
+                Insira uma Senha forte
+            </p>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button class="register-button custom-movies-button blue" type="submit" [disabled]="newRegisterInvalid">Registrar</button>
+        </div>
+    </div>
+</form>
+</section>
+</section>
