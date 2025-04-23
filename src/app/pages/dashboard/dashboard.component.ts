@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,10 +14,13 @@ export class DashboardComponent {
   message: string = '';
   findUserTag: string = '';
 
-  constructor(private getClientService: ClientService) { }
+  constructor(private getClientService: ClientService, private getActivatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.getClientService.tryLogin();
+    this.getClientService.setChatID(Number(this.getActivatedRoute.snapshot.paramMap.get("chatID")));
+    console.log(this.getClientService.getChatID());
+
   }
 
   sendMessage() {

@@ -16,6 +16,8 @@ export class ClientService {
   private socket = io('ws://localhost:8080');
   private apiUrl = 'http://localhost:3000';
   private user?: User;
+  private chatID: number = 0;
+
   private chat?: Chat;
 
   constructor(private http: HttpClient, private getRouter: Router) {
@@ -42,8 +44,8 @@ export class ClientService {
   //Enviar mensagem para o servidor
   sendMessageToServer(text: string) {
     let message: Message = {
-      chatID: //Pegar da URL,
-        userID: this.user?.id || '',
+      chatID: this.chatID,
+      userID: this.user?.id || '',
       text: text,
       edited: false,
       deleted: false,
@@ -53,6 +55,7 @@ export class ClientService {
 
     if (message.userID != '') {
 
+      //Trocar para postChat$
       this.postMessage$(message).subscribe({
         next: () => { },
         complete: () => { this.socket.emit('message', message); },
@@ -135,7 +138,7 @@ export class ClientService {
           },
           complete: () => {
             if (this.user) {
-              this.getRouter.navigate(['/']);
+              this.getRouter.navigate(['/dashboard']);
               localStorage.setItem('userEmail', typedEmail);
               localStorage.setItem('userPassword', typedPassword);
             }
@@ -176,7 +179,7 @@ export class ClientService {
                 complete: () => {
                   localStorage.setItem('userEmail', typedEmail);
                   localStorage.setItem('userPassword', typedPassword);
-                  this.getRouter.navigate(['/']);
+                  this.getRouter.navigate(['/dashboard']);
                 }
               });
             });
@@ -287,8 +290,15 @@ export class ClientService {
     return this.http.get<Array<Message>>(`${this.apiUrl}/messages?id=${id}`);
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////
 
+  public setChatID(chatID: number): void {
+    this.chatID = chatID;
+  }
 
+  public getChatID(): number {
+    return this.chatID;
+  }
 
 
 

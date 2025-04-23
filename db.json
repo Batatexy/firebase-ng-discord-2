@@ -29,7 +29,7 @@
   ],
   "chats": [
     {
-      "id": 0,
+      "id": "0",
       "usersIDs": [
         "5d21",
         "1547"
@@ -38,12 +38,6 @@
     }
   ],
   "messages": [
-    {
-      "id": "ae84",
-      "userID": "1547",
-      "text": "sadas",
-      "edited": false,
-      "deleted": false
-    }
+    
   ]
 }
