@@ -1,15 +1,55 @@
 <h4>
-    Olá {{this.getUser()?.name}} | #{{this.getUser()?.tag}}
+    Olá {{this.getUser()?.name}} | #{{this.getUser()?.id}}
 </h4>
 
-<ul id="friends"></ul>
+<ul id="friends">
+    @for (chat of getChats(); track $index)
+    {
+    @for (userID of chat.usersIDs; track $index)
+    {
+    @for (user of getFriendsList(); track $index)
+    {
+    @if (user.id == userID){
+    <li (click)="goToChat(chat.id)">
+        {{user.name}}
+    </li>
+    }
+    }
+    }
+    }
+</ul>
 
-<ul id="chats"></ul>
+<ul id="chats">
+
+
+
+
+    @for (chat of getChats(); track $index)
+    {
+    @if (chat.id == getChatID()){
+    @for (user of getFriendsList(); track $index)
+    {
+
+    @for (message of chat.messages; track $index)
+    {
+    <li>
+        {{user.name}}: {{message.text}}
+    </li>
+    }
+    }
+    }
+
+    }
+
+</ul>
 
 <ul id="messages"></ul>
 
+@if(getChatID() != 'null' && getChatID() != '0')
+{
 <input type="text" placeholder="Envie uma mensagem" [(ngModel)]="message" (keydown.enter)="sendMessage()" />
 <button (click)="sendMessage()">Send</button>
+}
 
 <br><br>
 

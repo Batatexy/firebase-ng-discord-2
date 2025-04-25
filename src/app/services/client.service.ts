@@ -16,26 +16,34 @@ export class ClientService {
   private socket = io('ws://localhost:8080');
   private apiUrl = 'http://localhost:3000';
   private user?: User;
-  private chatID: number = 0;
-
-  private chat?: Chat;
+  private chatID: string = '0';
+  private chats: Array<Chat> = [];
+  private friendsList: Array<User> = [];
 
   constructor(private http: HttpClient, private getRouter: Router) {
     //Recebe mensagens do servidor
     this.socket.on('message', (message: Message) => {
       //com o message.userID dá pra pegar as informações que precisamos do usuário
-      this.getUserByID$(message.userID).subscribe({
-        next: (user) => {
-          console.log(user[0]);
 
-          if (user[0]) {
-            let ul = document.querySelector('#messages') as HTMLUListElement;
-            let li = document.createElement('li');
-            li.innerText = `${user[0].name}: ${message.text}`;
-            ul?.appendChild(li);
+      //Atualizar a tela com a mensagem recebida, se bater o id do chat
+      if (message.chatID == this.chatID) {
+        //Busca o usuário pelo id
+        this.getUserByID$(message.userID).subscribe({
+          next: (user) => {
+            console.log(user[0]);
+
+            if (user[0]) {
+              //Criar um elemento li e adicionar na lista de mensagens
+              let ul = document.querySelector('#messages') as HTMLUListElement;
+              let li = document.createElement('li');
+              li.innerText = `${user[0].name}: ${message.text}`;
+              ul?.appendChild(li);
+            }
           }
-        }
-      })
+        })
+      }
+
+
     })
 
 
@@ -49,18 +57,31 @@ export class ClientService {
       text: text,
       edited: false,
       deleted: false,
+      //data: new Date(),
+      //time: new Date().toLocaleTimeString()
     }
 
     console.log('Message:', message);
 
     if (message.userID != '') {
 
-      //Trocar para postChat$
-      this.postMessage$(message).subscribe({
-        next: () => { },
-        complete: () => { this.socket.emit('message', message); },
-        error: () => { alert('Error'); }
-      });
+      this.chats.forEach((chat) => {
+        if (chat.id == message.chatID) {
+
+          //????????????????????????????????
+          let updateChat: Chat = chat;
+          updateChat.messages.push(message);
+
+          this.putChat$(updateChat).subscribe({
+            next: () => { },
+            complete: () => { this.socket.emit('message', message); },
+            error: () => { alert('Error PutChat'); }
+          });
+
+        }
+      }
+      );
+
 
     }
   }
@@ -71,76 +92,126 @@ export class ClientService {
 
   //Adicionar um amigo pela tag
   addFriend(findUserTag: string) {
-    //Procurar se este amigo existe
-    this.getUserByTag$(findUserTag).subscribe({
-      next: (user) => {
-        //Caso exista
-        if (user[0]) {
-          console.log(user[0]);
-          //Verificar se não é o mesmo usuário
-          if (user[0].id != this.user?.id) {
-            //Pegar todos os chats(infelizmente não tem como pegar só o length)
-            this.getChats$().subscribe({
-              next: (chats) => {
-                //Criar um novo chat, como id baseado no length do array de chats
-                let chat: Chat = {
-                  id: chats.length, //id do chat
-                  usersIDs: [this.user?.id || '', user[0]?.id || ''],
-                  messagesIDs: []
-                }
-                //Adicionar o chat no banco de dados
-                this.postChat$(chat).subscribe({
-                  complete: () => {
-                    //Adicionar o chat no usuário logado
-                    this.user?.chats.push(chat.id);
-                    this.putUser$(this.user).subscribe({
-                      complete: () => {
-                        //Adicionar o chat no amigo
-                        user[0].chats.push(chat.id);
-                        this.putUser$(user[0]).subscribe({
-                          complete: () => {
 
-                          },
-                          error: () => { alert('Error PutUser Friend'); }
-                        });
-                      },
-                      error: () => { alert('Error PutUser'); }
-                    });
-                  },
-                  error: () => { alert('Error PostChat'); }
-                });
-              },
-              error: () => { alert('Error GetChats'); }
-            });
-          }
-          else { alert('You cannot add yourself'); }
+    let validation = false;
+
+    console.log(this.chats);
+
+    this.chats.forEach((chat) => {
+      console.log(chat);
+
+      chat.usersIDs.forEach(userID => {
+        if (userID === findUserTag) {
+          console.log(userID, findUserTag);
+          validation = true;
         }
-        else { alert('User not found'); }
-      },
+      });
     });
+
+    console.log(validation);
+
+    if (!validation) {
+      //Procurar se este amigo existe
+      this.getUserByTag$(findUserTag).subscribe({
+        next: (user) => {
+          //Caso exista
+          if (user[0]) {
+            console.log(user[0]);
+            //Verificar se não é o mesmo usuário
+            if (user[0].id != this.user?.id) {
+              //Pegar todos os chats(infelizmente não tem como pegar só o length)
+              this.getChats$().subscribe({
+                next: (chats) => {
+                  //Criar um novo chat, como id baseado no length do array de chats + 1
+                  let chat: Chat = {
+                    id: String(chats.length + 1), //id do chat
+                    usersIDs: [this.user?.id || '', user[0]?.id || ''],
+                    messages: []
+                  }
+                  //Adicionar o chat no banco de dados
+                  this.postChat$(chat).subscribe({
+                    complete: () => {
+                      //Adicionar o chat no usuário logado
+                      this.user?.chats.push(chat.id);
+                      this.putUser$(this.user).subscribe({
+                        complete: () => {
+                          //Adicionar o chat no amigo
+                          user[0].chats.push(chat.id);
+                          this.putUser$(user[0]).subscribe({
+                            complete: () => {
+                              //this.tryLogin();
+                              this.chats.push(chat)
+
+                              this.getUserByID$(findUserTag).subscribe({
+                                next: (user) => {
+                                  this.friendsList.push(user[0])
+                                }
+                              })
+
+
+
+
+
+                            },
+                            error: () => { alert('Error PutUser Friend'); }
+                          });
+                        },
+                        error: () => { alert('Error PutUser'); }
+                      });
+                    },
+                    error: () => { alert('Error PostChat'); }
+                  });
+                },
+                error: () => { alert('Error GetChats'); }
+              });
+            }
+            else { alert('You cannot add yourself'); }
+          }
+          else { alert('User not found'); }
+        },
+      });
+    }
+    else {
+      alert('User already in your friend list');
+    }
   }
 
 
 
   //Autenticar o Login Usuário
   public authenticateLogin(typedEmail: string, typedPassword: string) {
+    //Criptografar a entrada, sendo do local storage ou da tela de login / registro
     this.encrptText(typedEmail).then((encrptEmail) => {
       this.encrptText(typedPassword).then((encrptPassword) => {
 
         console.log(encrptEmail, encrptPassword);
 
+        //Para então comparar com o email e senha salvos no banco(criptografados)
         this.getUserByEmailAndPassword$(encrptEmail, encrptPassword).subscribe({
           next: (user) => {
             if (user[0]) {
+              //Se digitado corretamente, usuário logado, salvo no sistema
               this.user = user[0];
-              console.log('User: ', this.user);
             }
           },
           complete: () => {
             if (this.user) {
-              this.getRouter.navigate(['/dashboard']);
+              //Então se é salvo o que foi digitado no local storage
               localStorage.setItem('userEmail', typedEmail);
               localStorage.setItem('userPassword', typedPassword);
+
+              //Validar chat correto
+              let validation = false;
+
+              this.user.chats.forEach(chatID => {
+                if (this.chatID == chatID) {
+                  validation = true;
+                }
+              });
+
+              if (this.chatID == '0' || !validation) {
+                this.getRouter.navigate(['/dashboard']);
+              }
             }
             else { this.getRouter.navigate(['/login']); }
           },
@@ -165,7 +236,7 @@ export class ClientService {
               console.log(encrptEmail, encrptPassword, typedTag, typedUserName);
 
               let newUser: User = {
-                tag: typedTag,
+                id: typedTag,
                 name: typedUserName,
                 description: 'Hello, im new here!',
                 status: 1,
@@ -254,7 +325,7 @@ export class ClientService {
 
   //Editar
   public putChat$(chat: Chat): Observable<unknown> {
-    return this.http.put<unknown>(`${this.apiUrl}/users/${chat.id}`, { ...chat });
+    return this.http.put<unknown>(`${this.apiUrl}/chats/${chat.id}`, { ...chat });
   }
 
   public getChatByID$(id: string): Observable<Array<Chat>> {
@@ -265,12 +336,18 @@ export class ClientService {
     return this.http.get<Array<Chat>>(`${this.apiUrl}/chats`);
   }
 
-  public getChats(): Chat | undefined {
-    return this.chat;
+
+
+  public getChats(): Array<Chat> {
+    return this.chats;
   }
 
-  public setChats(chat: Chat): void {
-    this.chat = chat;
+  public setChats(chats: Array<Chat>): void {
+    this.chats = chats;
+  }
+
+  public addChat(chat: Chat): void {
+    this.chats.push(chat);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -292,11 +369,11 @@ export class ClientService {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
-  public setChatID(chatID: number): void {
+  public setChatID(chatID: string): void {
     this.chatID = chatID;
   }
 
-  public getChatID(): number {
+  public getChatID(): string {
     return this.chatID;
   }
 
@@ -305,7 +382,17 @@ export class ClientService {
 
 
 
+  public getFriendsList(): Array<User> {
+    return this.friendsList;
+  }
 
+  public setFriendsList(friendsList: Array<User>): void {
+    this.friendsList = friendsList;
+  }
+
+  public addFriendToList(user: User): void {
+    this.friendsList.push(user);
+  }
 
 
 

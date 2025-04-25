@@ -1,7 +1,7 @@
 import { Message } from "./message";
 
 export type Chat = {
-    id: number;
+    id: string;
     usersIDs: Array<string>;
-    messagesIDs: Array<string>;
+    messages: Array<Message>;
 };

@@ -1,6 +1,5 @@
 export type User = {
-    id?: string;
-    tag: string;
+    id: string;
     name: string;
     description: string;
     status: number;
@@ -9,5 +8,5 @@ export type User = {
     email: string;
     password: string;
 
-    chats: Array<number>;
+    chats: Array<string>;
 };
