@@ -40,11 +40,11 @@ export class ClientService {
               ul?.appendChild(li);
             }
           }
-        })
+        });
       }
 
 
-    })
+    });
 
 
   }
@@ -59,7 +59,7 @@ export class ClientService {
       deleted: false,
       //data: new Date(),
       //time: new Date().toLocaleTimeString()
-    }
+    };
 
     console.log('Message:', message);
 
@@ -75,7 +75,7 @@ export class ClientService {
           this.putChat$(updateChat).subscribe({
             next: () => { },
             complete: () => { this.socket.emit('message', message); },
-            error: () => { alert('Error PutChat'); }
+            error: () => { alert('Erro: PutChat'); }
           });
 
         }
@@ -127,7 +127,7 @@ export class ClientService {
                     id: String(chats.length + 1), //id do chat
                     usersIDs: [this.user?.id || '', user[0]?.id || ''],
                     messages: []
-                  }
+                  };
                   //Adicionar o chat no banco de dados
                   this.postChat$(chat).subscribe({
                     complete: () => {
@@ -140,39 +140,39 @@ export class ClientService {
                           this.putUser$(user[0]).subscribe({
                             complete: () => {
                               //this.tryLogin();
-                              this.chats.push(chat)
+                              this.chats.push(chat);
 
                               this.getUserByID$(findUserTag).subscribe({
                                 next: (user) => {
-                                  this.friendsList.push(user[0])
+                                  this.friendsList.push(user[0]);
                                 }
-                              })
+                              });
 
 
 
 
 
                             },
-                            error: () => { alert('Error PutUser Friend'); }
+                            error: () => { alert('Erro: PutUser Friend'); }
                           });
                         },
-                        error: () => { alert('Error PutUser'); }
+                        error: () => { alert('Erro: PutUser'); }
                       });
                     },
-                    error: () => { alert('Error PostChat'); }
+                    error: () => { alert('Erro: PostChat'); }
                   });
                 },
-                error: () => { alert('Error GetChats'); }
+                error: () => { alert('Erro: GetChats'); }
               });
             }
-            else { alert('You cannot add yourself'); }
+            else { alert('Você não pode se adicionar kk'); }
           }
-          else { alert('User not found'); }
+          else { alert('Usuário não encontrado!'); }
         },
       });
     }
     else {
-      alert('User already in your friend list');
+      alert('Usuário já está na sua lista de amigos!');
     }
   }
 
@@ -215,7 +215,7 @@ export class ClientService {
             }
             else { this.getRouter.navigate(['/login']); }
           },
-          error: () => { alert('Error GetUserByEmailAndPassword'); }
+          error: () => { alert('Erro: GetUserByEmailAndPassword'); }
         });
       });
     });
@@ -229,7 +229,7 @@ export class ClientService {
 
       this.getUserByEmail$(encrptEmail).subscribe({
         next: (user) => {
-          if (user[0]) { alert('Email already registered!'); }
+          if (user[0]) { alert('Este Email já está cadastrado!'); }
           else {
             this.encrptText(typedPassword).then((encrptPassword) => {
 
@@ -244,7 +244,7 @@ export class ClientService {
                 email: encrptEmail,
                 password: encrptPassword,
                 chats: []
-              }
+              };
 
               this.postUser$(newUser).subscribe({
                 complete: () => {
@@ -258,7 +258,7 @@ export class ClientService {
           }
         },
         complete: () => { },
-        error: () => { alert('Error GetUserByEmail'); }
+        error: () => { alert('Erro: GetUserByEmail'); }
       });
 
 
@@ -401,7 +401,9 @@ export class ClientService {
 
 
 
-
+  getThisRouter() {
+    return this.getRouter;
+  }
 
 
 

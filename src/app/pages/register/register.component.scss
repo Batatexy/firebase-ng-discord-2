@@ -1,0 +1,17 @@
+.container{
+    width: 35rem;
+}
+
+.btn-outline-primary:hover{
+    background-color: transparent;
+    color: #0a53be;
+}
+
+
+@media (max-width:550px)
+{
+    .container{
+        width: 100%;
+    }
+}
+

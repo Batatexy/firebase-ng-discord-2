@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ClientService } from '../../services/client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -33,8 +34,13 @@ export class LoginComponent {
       this.getClientService.authenticateLogin(this.userEmailModel, this.userPasswordModel);
     }
     else {
-      alert("Insert a valid email and password!");
+      alert("Email ou Senha inválidos");
     }
+  }
+
+
+  public goToRegister() {
+    this.getClientService.getThisRouter().navigate(['/register']);
   }
 
 }

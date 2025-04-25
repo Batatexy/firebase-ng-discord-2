@@ -17,7 +17,7 @@ export class DashboardComponent {
   loadChats: boolean = false;
 
 
-  constructor(private getClientService: ClientService, private getActivatedRoute: ActivatedRoute, private getRouter: Router) { }
+  constructor(private getClientService: ClientService, private getActivatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -49,9 +49,9 @@ export class DashboardComponent {
 
                 this.getClientService.getUserByID$(userID).subscribe({
                   next: (user) => {
-                    this.getClientService.addFriendToList(user[0])
+                    this.getClientService.addFriendToList(user[0]);
                   },
-                })
+                });
 
 
             });
@@ -95,7 +95,7 @@ export class DashboardComponent {
   }
 
   public goToChat(chatID: string) {
-    this.getRouter.navigate(['/dashboard/' + chatID]);
+    this.getClientService.getThisRouter().navigate(['/dashboard/' + chatID]);
   }
 
 }

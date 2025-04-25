@@ -1,57 +1,85 @@
-<h4>
-    Olá {{this.getUser()?.name}} | #{{this.getUser()?.id}}
-</h4>
+<main class="d-flex flex-row">
 
-<ul id="friends">
-    @for (chat of getChats(); track $index)
-    {
-    @for (userID of chat.usersIDs; track $index)
-    {
-    @for (user of getFriendsList(); track $index)
-    {
-    @if (user.id == userID){
-    <li (click)="goToChat(chat.id)">
-        {{user.name}}
-    </li>
-    }
-    }
-    }
-    }
-</ul>
+    <section id="lateral-bar" class="d-flex flex-column justify-content-between">
+        <h4>
+            Olá {{this.getUser()?.name}} | #{{this.getUser()?.id}}
+        </h4>
+        
+        <div id="friends" class="w-25">
+            <nav class="">
+                <div>
+                    @for (chat of getChats(); track $index)
+                    {
+                        @for (userID of chat.usersIDs; track $index)
+                        {
+                            @for (user of getFriendsList(); track $index)
+                            {
+                                @if (user.id == userID)
+                                {
+                                    <div (click)="goToChat(chat.id)" role="button" class="d-flex flex-row">
+                                        <img id="profile-picture" src="{{user.profilePicture}}"> {{user.name}}
+                                    </div>
+                                }
+                            }
+                        }
+                    }
+                </div>
+                
+                
+            </nav>
+        </div>
 
-<ul id="chats">
+        <div>
+            <input class="w-50" type="text" placeholder="Adicionar Pessoa" [(ngModel)]="findUserTag" (keydown.enter)="sendUserTag()" />
+            <button (click)="sendUserTag()" id="add-friend">
+                <img src="../../../assets/images/add-friend.png">
+            </button>
+        </div>
+    </section>
+
+    
+    <section class="d-flex flex-column justify-content-between">
+        <div id="messages">
+            @for (chat of getChats(); track $index)
+            {
+                @if (chat.id == getChatID())
+                {
+                    @for (user of getFriendsList(); track $index)
+                    {
+                        @for (message of chat.messages; track $index)
+                        {
+                            <p class="ps-2">
+                                {{user.name}}: {{message.text}} #{{user.id}}
+                            </p>
+                        }
+                    }
+                }
+            }
+        </div>
+
+        <div class="">
+            <div id="text-message" class="fixed">
+                @if(getChatID() != 'null' && getChatID() != '0')
+                {
+                    <input type="text" placeholder="Envie uma mensagem" class="form-control border-1 border-primary"
+                    [(ngModel)]="message" (keydown.enter)="sendMessage()" />
+
+                    <button (click)="sendMessage()" id="send-message">
+                        <img src="../../../assets/images/send-message.png">
+                    </button>
+                }
+            </div>
+        </div>
+    </section>
+        
+    
+</main>
 
 
 
 
-    @for (chat of getChats(); track $index)
-    {
-    @if (chat.id == getChatID()){
-    @for (user of getFriendsList(); track $index)
-    {
 
-    @for (message of chat.messages; track $index)
-    {
-    <li>
-        {{user.name}}: {{message.text}}
-    </li>
-    }
-    }
-    }
 
-    }
 
-</ul>
 
-<ul id="messages"></ul>
 
-@if(getChatID() != 'null' && getChatID() != '0')
-{
-<input type="text" placeholder="Envie uma mensagem" [(ngModel)]="message" (keydown.enter)="sendMessage()" />
-<button (click)="sendMessage()">Send</button>
-}
-
-<br><br>
-
-<input type="text" placeholder="Adicionar Pessoa" [(ngModel)]="findUserTag" (keydown.enter)="sendUserTag()" />
-<button (click)="sendUserTag()">Send</button>

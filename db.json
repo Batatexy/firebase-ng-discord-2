@@ -1,8 +1,46 @@
 {
   "users": [
-    
+    {
+      "id": "123",
+      "name": "jon",
+      "description": "Hello, im new here!",
+      "status": 1,
+      "profilePicture": "../../../assets/images/profile.png",
+      "email": "8274a9208b34804dde288298e2e99dfeae7c477ba698f7fb1907285263d70997",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "chats": [
+        "1"
+      ]
+    },
+    {
+      "id": "321",
+      "name": "pedro",
+      "description": "Hello, im new here!",
+      "status": 1,
+      "profilePicture": "../../../assets/images/profile.png",
+      "email": "bfc3eb8fd7d1141431e7a8e8fc6c148d4c197c5a9bc4a1d08dbd1a76cd1f76c6",
+      "password": "ee5cd7d5d96c8874117891b2c92a036f96918e66c102bc698ae77542c186f981",
+      "chats": [
+        "1"
+      ]
+    }
   ],
   "chats": [
-    
+    {
+      "id": "1",
+      "usersIDs": [
+        "321",
+        "123"
+      ],
+      "messages": [
+        {
+          "chatID": "1",
+          "userID": "321",
+          "text": "salve",
+          "edited": false,
+          "deleted": false
+        }
+      ]
+    }
   ]
 }

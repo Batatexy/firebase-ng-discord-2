@@ -37,8 +37,12 @@ export class RegisterComponent {
       this.getClientService.authenticateRegister(this.userEmailModel, this.userPasswordModel, this.userTagModel, this.userNameModel);
     }
     else {
-      alert("Insert valid information");
+      alert("Preencha os campos com dados válidos!");
     }
+  }
+
+  public goToLogin() {
+    this.getClientService.getThisRouter().navigate(['/login']);
   }
 
 }

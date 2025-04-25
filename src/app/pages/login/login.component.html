@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pt-4">
     <form class="" id="login" [formGroup]="loginFormGroup" (ngSubmit)="submitLogin()">
 
         <legend>Login</legend>
@@ -10,15 +10,25 @@
                 formControlName="userEmail" [(ngModel)]="userEmailModel">
         </div>
 
-        <div class="pt-2">
-            <label for="email">Password:</label>
+        <div class="pt-2 pb-2">
+            <label for="email">Senha:</label>
 
             <input class="form-control border-1 border-primary" id="userPassword" type="password" name="userPassword"
                 formControlName="userPassword" [(ngModel)]="userPasswordModel">
         </div>
 
-        <button class="btn btn-primary mt-2" type="submit">
-            Login
-        </button>
+
+        <div class="d-flex flex-column flex-sm-row">
+            <button class="btn btn-primary w-100 me-sm-1" type="submit">
+                Login
+            </button>
+    
+            <button class="btn btn-outline-primary w-100 ms-sm-1 mt-2 mt-sm-0"(click)="goToRegister()">
+                Criar conta
+            </button>
+        </div>
+
+
+        
     </form>
 </div>
