@@ -59,5 +59,8 @@ export class DashboardComponent {
   }
 
 
+  public logOut() {
+    this.getClientService.logOut();
+  }
 
 }

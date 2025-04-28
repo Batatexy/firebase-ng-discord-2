@@ -1,4 +1,8 @@
-<main class="d-flex flex-row">
+<main class="d-flex flex-sm-row">
+
+        <button id="logout" class="btn btn-primary" (click)="logOut()"> 
+            Sair
+        </button>
 
     <section id="lateral-bar" class="d-flex flex-column justify-content-between">
 
@@ -13,21 +17,7 @@
                     <p>
                         #{{this.getUser()?.id}}
                     </p>
-                    <h4 id="variables">
-                        User: {{getUser()?.chats}} <br>
-                        ChatID: {{getChatID()}} <br>
-                        Friends: <br>
-                        <ul>
-                            @for (friend of getFriendsList(); track $index) 
-                            {
-                                <li>
-                                    Chat: {{friend.chat.id}}<br>
-                                    User: {{friend.user.id}}
-                                </li>
-                            }
-                        </ul>
-                        
-                    </h4>
+                    
                 </div>
 
             </div>
@@ -66,9 +56,9 @@
     </section>
 
     <section id="messages" class="d-flex flex-column justify-content-between w-100">
+        
         <div id="history-messages" class="pe-2 ps-2 w-100">
 
-            
                 @for (chat of getFriendsList(); track $index) 
                 {
                     @if(chat.chat.id == getChatID())

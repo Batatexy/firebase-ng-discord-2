@@ -33,7 +33,23 @@ export class ClientService {
             console.log(user[0]);
 
             if (user[0]) {
-              //Reatualizar os dados
+              this.friendsList.forEach(friend => {
+                if (friend.chat.id == message.chatID) {
+
+                  //Procurar qual chat adicionar a mensagem
+                  this.friendsList.forEach((friend) => {
+                    if (friend.chat.id == message.chatID) {
+                      friend.chat.messages.push(message);
+
+                      //Editar no banco o chat especifico com a nova mensagem implementada
+                      this.putChat$(friend.chat).subscribe({
+                        error: () => { alert('Erro: PutChat'); }
+                      });
+
+                    }
+                  });
+                }
+              });
             }
           }
         });
@@ -41,6 +57,17 @@ export class ClientService {
 
     });
 
+    this.socket.on('friendRequest', (friend: { chat: Chat, user: User; }) => {
+
+      console.log(friend.user.id, this.user?.id);
+
+      if (friend.user.id == this.user?.id) {
+        this.user?.chats.push(friend.chat.id);
+        this.refreshFriendsList();
+      }
+
+
+    });
   }
 
   //Enviar mensagem para o servidor
@@ -57,20 +84,7 @@ export class ClientService {
         //time: new Date().toLocaleTimeString()
       };
 
-      //Procurar qual chat adicionar a mensagem
-      this.friendsList.forEach((chat) => {
-        if (chat.chat.id == message.chatID) {
-          chat.chat.messages.push(message);
-
-          //Editar no banco o chat especifico com a nova mensagem implementada
-          this.putChat$(chat.chat).subscribe({
-            complete: () => { this.socket.emit('message', message); },
-            error: () => { alert('Erro: PutChat'); }
-          });
-
-        }
-      });
-
+      this.socket.emit('message', message);
     }
   }
 
@@ -87,8 +101,8 @@ export class ClientService {
     //Verificar se o usuario já está adicionado
     let friendOnList = false;
 
-    this.friendsList.forEach((chat) => {
-      chat.chat.usersIDs.forEach(userID => {
+    this.friendsList.forEach((friend) => {
+      friend.chat.usersIDs.forEach(userID => {
         if (userID.toLowerCase() === findUserTag.toLowerCase()) {
           console.log('IDs: ' + userID.toLowerCase(), findUserTag.toLowerCase());
           friendOnList = true;
@@ -125,8 +139,11 @@ export class ClientService {
                     complete: () => {
                       //Adicionar o ID do chat no amigo
                       user[0].chats.push(chat.id);
+
+
                       this.putUser$(user[0]).subscribe({
                         complete: () => {
+                          this.socket.emit('friendRequest', { chat: chat, user: user[0] });
                           this.refreshFriendsList();
                         },
                         error: () => { alert('Erro: PutUser Friend'); }
@@ -279,6 +296,13 @@ export class ClientService {
 
 
     });
+  }
+
+  public logOut() {
+    localStorage.setItem('userEmail', '');
+    localStorage.setItem('userPassword', '');
+    this.user = undefined;
+    this.tryLogin();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////

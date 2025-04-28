@@ -19,11 +19,16 @@ io.on('connection', (socket) => {
 
     //Recebe a mensagem do cliente
     socket.on('message', (message) => {
-        console.log(message.userID, message.text);
 
-        //Envia a mensagem para todos os clientes conectados
-        //Não consegui fazer mandar o socket (Caso precise)
+        //Envia a mensagem para todos os clientes conectados, mas depois será filtrado
         io.emit('message', message);
+    });
+
+    //Recebe pedidos de amizade
+    socket.on('friendRequest', (friend) => {
+
+        //Envia o pedido para todos os clientes conectados, mas depois será filtrado
+        io.emit('friendRequest', friend);
     });
 })
 
