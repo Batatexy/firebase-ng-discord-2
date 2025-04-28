@@ -10,8 +10,7 @@
       "password": "ee5cd7d5d96c8874117891b2c92a036f96918e66c102bc698ae77542c186f981",
       "chats": [
         "1",
-        "3",
-        "4"
+        "2"
       ]
     },
     {
@@ -23,9 +22,7 @@
       "email": "8274a9208b34804dde288298e2e99dfeae7c477ba698f7fb1907285263d70997",
       "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
       "chats": [
-        "1",
-        "2",
-        "4"
+        "1"
       ]
     },
     {
@@ -37,99 +34,34 @@
       "email": "ab825b45eeb761de5a4cf1bd6b78be0cd4169af3dcbfd8b5802b91b7f8ccd7b9",
       "password": "2a21fe6d592a19b7de898b50eb53c429608de1a66f3e9f62da19714a770553d1",
       "chats": [
-        "2",
-        "3"
+        "2"
       ]
+    },
+    {
+      "id": "321",
+      "name": "josé",
+      "description": "Hello, im new here!",
+      "status": 1,
+      "profilePicture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6ZPDn6az384ocz1qOHH7jza9rjCUbDXjqXA&s",
+      "email": "bfc3eb8fd7d1141431e7a8e8fc6c148d4c197c5a9bc4a1d08dbd1a76cd1f76c6",
+      "password": "ee5cd7d5d96c8874117891b2c92a036f96918e66c102bc698ae77542c186f981",
+      "chats": []
     }
   ],
   "chats": [
     {
       "id": "1",
       "usersIDs": [
-        "joao",
-        "321"
-      ],
-      "messages": [
-        {
-          "chatID": "1",
-          "userID": "joao",
-          "text": "salve",
-          "edited": false,
-          "deleted": false
-        },
-        {
-          "chatID": "1",
-          "userID": "321",
-          "text": "eae maan",
-          "edited": false,
-          "deleted": false
-        },
-        {
-          "chatID": "1",
-          "userID": "joao",
-          "text": "bora kartiar um mine",
-          "edited": false,
-          "deleted": false
-        },
-        {
-          "chatID": "1",
-          "userID": "joao",
-          "text": "o",
-          "edited": false,
-          "deleted": false
-        },
-        {
-          "chatID": "1",
-          "userID": "joao",
-          "text": "2",
-          "edited": false,
-          "deleted": false
-        },
-        {
-          "chatID": "1",
-          "userID": "321",
-          "text": "oie",
-          "edited": false,
-          "deleted": false
-        }
-      ]
-    },
-    {
-      "id": "2",
-      "usersIDs": [
-        "joao",
-        "big"
+        "321",
+        "joao"
       ],
       "messages": []
     },
     {
-      "id": "3",
+      "id": "2",
       "usersIDs": [
         "321",
         "big"
-      ],
-      "messages": [
-        {
-          "chatID": "3",
-          "userID": "321",
-          "text": "oie",
-          "edited": false,
-          "deleted": false
-        },
-        {
-          "chatID": "3",
-          "userID": "321",
-          "text": "salve",
-          "edited": false,
-          "deleted": false
-        }
-      ]
-    },
-    {
-      "id": "4",
-      "usersIDs": [
-        "joao",
-        "321"
       ],
       "messages": []
     }

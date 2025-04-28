@@ -13,6 +13,21 @@
                     <p>
                         #{{this.getUser()?.id}}
                     </p>
+                    <h4 id="variables">
+                        User: {{getUser()?.chats}} <br>
+                        ChatID: {{getChatID()}} <br>
+                        Friends: <br>
+                        <ul>
+                            @for (friend of getFriendsList(); track $index) 
+                            {
+                                <li>
+                                    Chat: {{friend.chat.id}}<br>
+                                    User: {{friend.user.id}}
+                                </li>
+                            }
+                        </ul>
+                        
+                    </h4>
                 </div>
 
             </div>
@@ -21,7 +36,7 @@
             <div>
                 <div>
                     <p>
-                    @for (chat of getChats(); track $index)
+                    @for (chat of getFriendsList(); track $index)
                     {
                         @for (userID of chat.chat.usersIDs; track $index) 
                         {
@@ -54,7 +69,7 @@
         <div id="history-messages" class="pe-2 ps-2 w-100">
 
             
-                @for (chat of getChats(); track $index) 
+                @for (chat of getFriendsList(); track $index) 
                 {
                     @if(chat.chat.id == getChatID())
                     {

@@ -21,6 +21,10 @@ export class DashboardComponent {
     this.getClientService.tryLogin();
   }
 
+  ngAfterViewChecked() {
+    //this.getClientService.refreshFriendsList();
+  }
+
   public sendMessage() {
     if (this.message != '') {
       console.log('user:', this.getClientService.getUser());
@@ -40,8 +44,8 @@ export class DashboardComponent {
     return this.getClientService.getUser();
   }
 
-  public getChats() {
-    return this.getClientService.getChats();
+  public getFriendsList() {
+    return this.getClientService.getFriendsList();
   }
 
   public getChatID() {
@@ -53,5 +57,7 @@ export class DashboardComponent {
     this.getClientService.setChatID(chatID);
     this.getClientService.getThisRouter().navigate(['/dashboard/' + chatID]);
   }
+
+
 
 }

@@ -12,12 +12,13 @@ import { Chat } from '../models/chat';
   providedIn: 'root'
 })
 export class ClientService {
-
   private socket = io('ws://localhost:8080');
   private apiUrl = 'http://localhost:3000';
+
+  //Usuário logado, chat de conversa e lista de amigos
   private user?: User;
   private chatID: string = '0';
-  private chats: Array<{ chat: Chat, user: User }> = [];
+  private friendsList: Array<{ chat: Chat, user: User; }> = [];
 
   constructor(private http: HttpClient, private getRouter: Router, private getActivatedRoute: ActivatedRoute) {
     //Recebe mensagens do servidor
@@ -57,7 +58,7 @@ export class ClientService {
       };
 
       //Procurar qual chat adicionar a mensagem
-      this.chats.forEach((chat) => {
+      this.friendsList.forEach((chat) => {
         if (chat.chat.id == message.chatID) {
           chat.chat.messages.push(message);
 
@@ -84,141 +85,114 @@ export class ClientService {
     }
 
     //Verificar se o usuario já está adicionado
-    let validation = false;
+    let friendOnList = false;
 
-    this.chats.forEach((chat) => {
-      console.log(chat);
-
+    this.friendsList.forEach((chat) => {
       chat.chat.usersIDs.forEach(userID => {
         if (userID.toLowerCase() === findUserTag.toLowerCase()) {
           console.log('IDs: ' + userID.toLowerCase(), findUserTag.toLowerCase());
-          validation = true;
+          friendOnList = true;
         }
       });
+
     });
 
-    console.log(validation);
-
-    if (!validation) {
-      //Procurar se este amigo existe
-      this.getUserByID$(findUserTag.toLowerCase()).subscribe({
-        next: (user) => {
-          //Caso exista
-          if (user[0]) {
-            console.log(user[0]);
-            //Pegar todos os chats(infelizmente não tem como pegar só o length)
-            this.getChats$().subscribe({
-              next: (chats) => {
-                //Criar um novo chat, como id baseado no length do array de chats + 1
-                let chat: Chat = {
-                  id: String(chats.length + 1), //id do chat
-                  usersIDs: [this.user?.id.toLowerCase() || '', user[0]?.id.toLowerCase() || ''],
-                  messages: []
-                };
-                //Adicionar o chat no banco de dados
-                this.postChat$(chat).subscribe({
-                  complete: () => {
-                    //Adicionar o chat no usuário logado
-                    this.user?.chats.push(chat.id);
-                    this.putUser$(this.user).subscribe({
-                      complete: () => {
-                        //Adicionar o chat no amigo
-                        user[0].chats.push(chat.id);
-                        this.putUser$(user[0]).subscribe({
-                          complete: () => {
-                            this.setChatsAndFriends();
-                          },
-                          error: () => { alert('Erro: PutUser Friend'); }
-                        });
-                      },
-                      error: () => { alert('Erro: PutUser'); }
-                    });
-                  },
-                  error: () => { alert('Erro: PostChat'); }
-                });
-              },
-              error: () => { alert('Erro: GetChats'); }
-            });
-
-          }
-          else { alert('Usuário não encontrado!'); }
-        },
-      });
-    }
-    else {
+    if (friendOnList) {
       alert('Usuário já está na sua lista de amigos!');
+      return;
     }
-  }
 
-  public setChatsAndFriends() {
-    this.setChatID(String(this.getActivatedRoute.snapshot.paramMap.get("chatID")));
-    this.setChats([]);
-
-    this.getUser()?.chats.forEach((chatID) => {
-      this.getChatByID$(chatID).subscribe({
-        next: (chat) => {
-
-          console.log('Chat loaded:', chat[0]);
-
-          chat[0].usersIDs.forEach(userID => {
-
-            if (userID != this.getUser()?.id)
-
-              this.getUserByID$(userID).subscribe({
-                next: (user) => {
-                  this.addChat({ chat: chat[0], user: user[0] });
+    //Procurar se este amigo existe
+    this.getUserByID$(findUserTag.toLowerCase()).subscribe({
+      next: (user) => {
+        //Caso exista
+        if (user[0]) {
+          //Pegar todos os chats(infelizmente não tem como pegar só o length)
+          this.getChats$().subscribe({
+            next: (allChats) => {
+              //Criar um novo chat, como id baseado no length do array de chats + 1
+              let chat: Chat = {
+                id: String(allChats.length + 1), //id do chat
+                usersIDs: [this.user?.id.toLowerCase() || '', user[0]?.id.toLowerCase() || ''],
+                messages: []
+              };
+              //Adicionar o chat no banco de dados
+              this.postChat$(chat).subscribe({
+                complete: () => {
+                  //Adicionar o ID do chat no usuário logado
+                  this.user?.chats.push(chat.id);
+                  this.putUser$(this.user).subscribe({
+                    complete: () => {
+                      //Adicionar o ID do chat no amigo
+                      user[0].chats.push(chat.id);
+                      this.putUser$(user[0]).subscribe({
+                        complete: () => {
+                          this.refreshFriendsList();
+                        },
+                        error: () => { alert('Erro: PutUser Friend'); }
+                      });
+                    },
+                    error: () => { alert('Erro: PutUser'); }
+                  });
                 },
+                error: () => { alert('Erro: PostChat'); }
               });
+            },
+            error: () => { alert('Erro: GetChats'); }
           });
+
         }
-      });
+        else { alert('Usuário não encontrado!'); }
+      },
     });
   }
+
+
 
   public tryLogin() {
     this.authenticateLogin(localStorage.getItem('userEmail') || '0', localStorage.getItem('userPassword') || '0');
   }
 
   //Autenticar o Login Usuário
-  public authenticateLogin(typedEmail: string, typedPassword: string) {
+  public authenticateLogin(email: string, password: string) {
     //Criptografar a entrada, sendo do local storage ou da tela de login / registro
-    this.encrptText(typedEmail).then((encrptEmail) => {
-      this.encrptText(typedPassword).then((encrptPassword) => {
+    this.encryptText(email).then((encryptedEmail) => {
+      this.encryptText(password).then((encryptedPassword) => {
 
-        console.log(encrptEmail, encrptPassword);
+        console.log(encryptedEmail, encryptedPassword);
 
         //Para então comparar com o email e senha salvos no banco(criptografados)
-        this.getUserByEmailAndPassword$(encrptEmail, encrptPassword).subscribe({
+        this.getUserByEmailAndPassword$(encryptedEmail, encryptedPassword).subscribe({
           next: (user) => {
             if (user[0]) {
               //Se digitado corretamente, usuário logado, salvo no sistema
               this.user = user[0];
+
+              if (this.user) {
+                //Então se é salvo o que foi digitado no local storage
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userPassword', password);
+
+                //Validar se estamos em algum chat
+                let validation = false;
+
+                this.user.chats.forEach(chatID => {
+                  if (this.chatID == chatID) {
+                    validation = true;
+                  }
+                });
+
+                //Caso contrario, retornar ao dashboard
+                if (this.chatID == '0' || !validation) {
+                  this.getRouter.navigate(['/dashboard']);
+                }
+              }
             }
           },
           complete: () => {
             if (this.user) {
-              //Então se é salvo o que foi digitado no local storage
-              localStorage.setItem('userEmail', typedEmail);
-              localStorage.setItem('userPassword', typedPassword);
-
-              //Validar se estamos em algum chat
-              let validation = false;
-
-              this.user.chats.forEach(chatID => {
-                if (this.chatID == chatID) {
-                  validation = true;
-                }
-              });
-
-              //Caso contrario, retornar ao dashboard
-              if (this.chatID == '0' || !validation) {
-                this.getRouter.navigate(['/dashboard']);
-              }
-
-
-
-
               //Puxar informações: Chats, Amigos
+              this.refreshFriendsList();
             }
             else { this.getRouter.navigate(['/login']); }
           },
@@ -228,19 +202,54 @@ export class ClientService {
     });
   }
 
+  public refreshFriendsList() {
 
+    this.friendsList = [];
+
+    this.user?.chats.forEach(chatID => {
+      this.getChatByID$(chatID).subscribe({
+        next: (chat) => {
+          chat[0].usersIDs.forEach(userID => {
+            if (userID != this.user?.id) {
+              this.getUserByID$(userID).subscribe({
+                next: (user) => {
+
+                  let friendOnList = false;
+                  let newFriend = { chat: chat[0], user: user[0] };
+
+                  this.friendsList.forEach(friend => {
+                    if ((newFriend.chat.id == friend.chat.id) && (newFriend.user.id == friend.user.id)) {
+                      friendOnList = true;
+                    }
+                  });
+
+                  if (!friendOnList) {
+                    this.addToFriendList(newFriend);
+                  }
+
+                }
+              });
+            }
+          });
+        }
+      });
+    });
+
+
+
+  }
 
   //Autenticar o Usuário
   public authenticateRegister(typedEmail: string, typedPassword: string, typedTag: string, typedUserName: string) {
-    this.encrptText(typedEmail).then((encrptEmail) => {
+    this.encryptText(typedEmail).then((encryptedEmail) => {
 
-      this.getUserByEmail$(encrptEmail).subscribe({
+      this.getUserByEmail$(encryptedEmail).subscribe({
         next: (user) => {
           if (user[0]) { alert('Este Email já está cadastrado!'); }
           else {
-            this.encrptText(typedPassword).then((encrptPassword) => {
+            this.encryptText(typedPassword).then((encryptedPassword) => {
 
-              console.log(encrptEmail, encrptPassword, typedTag, typedUserName);
+              console.log(encryptedEmail, encryptedPassword, typedTag, typedUserName);
 
               let newUser: User = {
                 id: typedTag.toLowerCase(),
@@ -248,8 +257,8 @@ export class ClientService {
                 description: 'Hello, im new here!',
                 status: 1,
                 profilePicture: '../../../assets/images/profile.png',
-                email: encrptEmail,
-                password: encrptPassword,
+                email: encryptedEmail,
+                password: encryptedPassword,
                 chats: []
               };
 
@@ -272,9 +281,9 @@ export class ClientService {
     });
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////
 
-
-  public async encrptText(text: string | null): Promise<string> {
+  public async encryptText(text: string | null): Promise<string> {
     if (!text) return '';
     const encoder = new TextEncoder();
     const data = encoder.encode(text);
@@ -341,16 +350,16 @@ export class ClientService {
 
 
 
-  public getChats(): Array<{ chat: Chat, user: User }> {
-    return this.chats;
+  public getFriendsList(): Array<{ chat: Chat, user: User; }> {
+    return this.friendsList;
   }
 
-  public setChats(chats: Array<{ chat: Chat, user: User }>): void {
-    this.chats = chats;
+  public setFriendsList(friendsList: Array<{ chat: Chat, user: User; }>): void {
+    this.friendsList = friendsList;
   }
 
-  public addChat(chat: { chat: Chat, user: User }): void {
-    this.chats.push(chat);
+  public addToFriendList(friend: { chat: Chat, user: User; }): void {
+    this.friendsList.push(friend);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
