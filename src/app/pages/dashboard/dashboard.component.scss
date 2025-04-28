@@ -1,28 +1,126 @@
-#send-message, #send-message img, #add-friend{
-    background-color: transparent;
-    border: 0px solid transparent;
-    padding: 0;
+main{
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+#lateral-bar{
+    background-color: rgb(228, 228, 228);
+    width: 30rem;
     
 }
 
-#send-message img, #add-friend img{
+//Foto, nome e tag do usuário na lateral esquerda topo////////////////////////////////////////////////////////////////////////
+
+#profile-picture{
+    padding-bottom: 2rem;
+}
+
+#profile-picture div{
+    margin-top: -0.2rem;
+}
+
+#profile-picture p, h4{
+    padding: 0;
+    margin: 0;
+}
+
+#profile-picture img{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 10rem;
+}
+
+//Imagens de enviar mensagem//////////////////////////////////////////////////////////////////////////////////////////////////
+
+#send-message img{
     width: 1.5rem;
     height: 1.5rem;
 }
 
-#send-message{
-
+#friends{
+    padding: 1rem;
 }
 
-#profile-picture{
+#add-friend{
+    padding: 1rem;
+}
+
+#add-friend input{
+    padding: 1rem;
+}
+
+//Cards de amigos na lateral esquerda/////////////////////////////////////////////////////////////////////////////////////////
+
+#friends-cards{
+    padding: 0.25rem;
+    margin: 0;
+
+    transition: 0.25s ease-in-out ;
+}
+
+#friends-cards:hover{
+    border-radius: 0.5rem;
+    background-color: rgb(213, 213, 213);
+}
+
+#friends-picture{
     width: 2rem;
     height: 2rem;
+    border-radius: 10rem;
 }
 
-#lateral-bar{
-    border-right: 1px solid gray;
+#friends-cards p{
+    padding: 0;
+    margin: 0;
 }
 
-main{
-    height: 10rem;
+//Histórico de Mensagens//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#messages{
+    width: 100%;
 }
+
+#history-messages{
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+
+    height: 100vh;
+}
+
+app-message:hover{
+    background-color: rgb(250, 250, 250);
+    border-radius: 0.25rem;
+}
+
+//Input de enviar mensagem////////////////////////////////////////////////////////////////////////////////////////////////////
+//Remover estilização padrão do botão de enviar mensagem
+#send-message, #send-message img{
+    background-color: transparent;
+    border: 0px solid transparent;
+    padding: 0;
+}
+
+#send-message div{
+    padding: 1rem;
+}
+
+#send-message input{
+    padding: 1rem;
+}
+
+#send-message button{
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+}
+
+#send-message button{
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+}
+
+
+
+

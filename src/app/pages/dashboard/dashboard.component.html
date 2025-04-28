@@ -1,68 +1,99 @@
 <main class="d-flex flex-row">
 
     <section id="lateral-bar" class="d-flex flex-column justify-content-between">
-        <h4>
-            Olá {{this.getUser()?.name}} | #{{this.getUser()?.id}}
-        </h4>
-        
-        <div id="friends" class="w-25">
-            <nav class="">
+
+        <div id="friends">
+            <div id="profile-picture" class="d-flex">
+                <img src="{{this.getUser()?.profilePicture}}">
+                
+                <div class="d-flex flex-column ps-2">
+                    <h4>
+                        {{this.getUser()?.name}}
+                    </h4>
+                    <p>
+                        #{{this.getUser()?.id}}
+                    </p>
+                </div>
+
+            </div>
+            
+
+            <div>
                 <div>
+                    <p>
                     @for (chat of getChats(); track $index)
                     {
-                        @for (userID of chat.usersIDs; track $index)
+                        @for (userID of chat.chat.usersIDs; track $index) 
                         {
-                            @for (user of getFriendsList(); track $index)
+                            @if(userID != getUser()?.id)
                             {
-                                @if (user.id == userID)
+                                
+                                @if (chat.user.id != getUser()?.id && chat.user.id == userID)
                                 {
-                                    <div (click)="goToChat(chat.id)" role="button" class="d-flex flex-row">
-                                        <img id="profile-picture" src="{{user.profilePicture}}"> {{user.name}}
+                                    <div (click)="goToChat(chat.chat.id)" role="button" class="d-flex flex-row" id="friends-cards">
+                                        <img id="friends-picture" src="{{chat.user.profilePicture}}"> 
+                                        <p class="ps-2">{{chat.user.name}}</p>
                                     </div>
                                 }
                             }
                         }
                     }
+
+                </p>
                 </div>
-                
-                
-            </nav>
+            </div>
         </div>
 
-        <div>
-            <input class="w-50" type="text" placeholder="Adicionar Pessoa" [(ngModel)]="findUserTag" (keydown.enter)="sendUserTag()" />
-            <button (click)="sendUserTag()" id="add-friend">
-                <img src="../../../assets/images/add-friend.png">
-            </button>
+        <div id="add-friend">
+            <input type="text" placeholder="Adicionar Pessoa" [(ngModel)]="findUserTag" (keydown.enter)="sendUserTag()"
+            class="form-control border-1 border-primary" />
         </div>
     </section>
 
-    
-    <section class="d-flex flex-column justify-content-between">
-        <div id="messages">
-            @for (chat of getChats(); track $index)
-            {
-                @if (chat.id == getChatID())
+    <section id="messages" class="d-flex flex-column justify-content-between w-100">
+        <div id="history-messages" class="pe-2 ps-2 w-100">
+
+            
+                @for (chat of getChats(); track $index) 
                 {
-                    @for (user of getFriendsList(); track $index)
+                    @if(chat.chat.id == getChatID())
                     {
-                        @for (message of chat.messages; track $index)
+                        @for (message of chat.chat.messages.slice().reverse(); track $index) 
                         {
-                            <p class="ps-2">
-                                {{user.name}}: {{message.text}} #{{user.id}}
-                            </p>
+                            
+                            @if(chat.user.id == message.userID)
+                            {
+                                <app-message [user]="chat.user" [message]="message"/>
+                            }
+
+                            @if(getUser()?.id == message.userID)
+                            {
+                                
+                                <app-message [user]="getUser()" [message]="message" [right]="''"/>
+                            }
+                            
                         }
-                    }
+                    
                 }
             }
+
+
+
+
+           
+
+
+
+
+
         </div>
 
-        <div class="">
-            <div id="text-message" class="fixed">
+        <div id="send-message">
+            <div class="fixed">
                 @if(getChatID() != 'null' && getChatID() != '0')
                 {
-                    <input type="text" placeholder="Envie uma mensagem" class="form-control border-1 border-primary"
-                    [(ngModel)]="message" (keydown.enter)="sendMessage()" />
+                    <input type="text" placeholder="Envie uma mensagem" [(ngModel)]="message" (keydown.enter)="sendMessage()" 
+                    class="form-control border-1 border-primary"/>
 
                     <button (click)="sendMessage()" id="send-message">
                         <img src="../../../assets/images/send-message.png">
@@ -71,15 +102,6 @@
             </div>
         </div>
     </section>
-        
-    
+
+
 </main>
-
-
-
-
-
-
-
-
-

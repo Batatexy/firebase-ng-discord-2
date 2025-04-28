@@ -1,0 +1,16 @@
+<div class="w-100 d-flex p-1" [class]="right">
+    <div class="image">
+        <img src="{{user?.profilePicture}}" >
+    </div>
+    
+
+    <div class="ps-2">
+        <p class="w-100 d-flex">
+            <b>{{user?.name}}(#{{user?.id}})</b>
+        </p>
+        <p>
+            {{message?.text}}
+        </p>
+    </div>
+    
+</div>
