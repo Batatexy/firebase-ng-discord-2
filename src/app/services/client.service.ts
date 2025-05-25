@@ -301,8 +301,7 @@ export class ClientService {
   public logOut() {
     localStorage.setItem('userEmail', '');
     localStorage.setItem('userPassword', '');
-    this.user = undefined;
-    this.tryLogin();
+    this.getRouter.navigate(['/login']);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////

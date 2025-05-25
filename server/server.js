@@ -2,10 +2,10 @@
 
 const { log } = require('console');
 
-//Importa o express
+//Criar um servidor HTTP básico
 const http = require('http').createServer();
 
-//Importa o socket.io
+//Importar o socket.io
 const io = require('socket.io')(http, {
     cors: {
         origin: '*',

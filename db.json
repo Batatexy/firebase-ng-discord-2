@@ -1,60 +1,89 @@
 {
   "users": [
     {
-      "id": "321",
-      "name": "pedro",
+      "id": "001",
+      "name": "João",
       "description": "Hello, im new here!",
       "status": 1,
-      "profilePicture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6ZPDn6az384ocz1qOHH7jza9rjCUbDXjqXA&s",
-      "email": "bfc3eb8fd7d1141431e7a8e8fc6c148d4c197c5a9bc4a1d08dbd1a76cd1f76c6",
-      "password": "ee5cd7d5d96c8874117891b2c92a036f96918e66c102bc698ae77542c186f981",
-      "chats": [
-      ]
-    },
-    {
-      "id": "joao",
-      "name": "Jon",
-      "description": "Hello, im new here!",
-      "status": 1,
-      "profilePicture": "https://pt.quizur.com/_image?href=https://img.quizur.com/f/img64a98055d1c0e0.35166373.jpg?lastEdited=1688830045&w=600&h=600&f=webp",
+      "profilePicture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4KUqzW3kvvx7pKt7pMbqslr0ZS9NYBSAbsw&s",
       "email": "8274a9208b34804dde288298e2e99dfeae7c477ba698f7fb1907285263d70997",
-      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
       "chats": [
+        "1",
+        "2"
       ]
     },
     {
-      "id": "big",
-      "name": "Bigggg",
+      "id": "002",
+      "name": "Carlos",
       "description": "Hello, im new here!",
       "status": 1,
-      "profilePicture": "https://conteudo.imguol.com.br/c/entretenimento/9b/2021/07/16/com-14-faixas-doce-22-e-o-segundo-album-da-carreira-de-luisa-sonza-1626477229775_v2_600x600.jpg.webp",
-      "email": "ab825b45eeb761de5a4cf1bd6b78be0cd4169af3dcbfd8b5802b91b7f8ccd7b9",
-      "password": "2a21fe6d592a19b7de898b50eb53c429608de1a66f3e9f62da19714a770553d1",
-      "chats": []
+      "profilePicture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnjenB5MnXfhCyW8VrTIZ2Vkdj-r1XXGzllQ&s",
+      "email": "2c371996645dc5132dd3d0c12c1e9e10ae6feb551c7bdb621736c85d0363910f",
+      "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+      "chats": [
+        "1"
+      ]
     },
     {
-      "id": "321",
-      "name": "josé",
-      "description": "Hello, im new here!",
-      "status": 1,
-      "profilePicture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6ZPDn6az384ocz1qOHH7jza9rjCUbDXjqXA&s",
-      "email": "bfc3eb8fd7d1141431e7a8e8fc6c148d4c197c5a9bc4a1d08dbd1a76cd1f76c6",
-      "password": "ee5cd7d5d96c8874117891b2c92a036f96918e66c102bc698ae77542c186f981",
-      "chats": []
-    },
-    {
-      "id": "pix",
-      "name": "piclesmix",
+      "id": "pedrao123",
+      "name": "Pedro",
       "description": "Hello, im new here!",
       "status": 1,
       "profilePicture": "../../../assets/images/profile.png",
-      "email": "02340798317694a2adf2750ab82364acb04a1d586880e98fcf6100057d2e88a5",
-      "password": "57c712d37789c12225e9fa5c5af81338cfb2a7787cf84047d52d2b40fb73afb0",
+      "email": "e130c1f99a75c8cf9a985c43996205ebcddb33cc7d6ace7176ba99f57dbfb43d",
+      "password": "ee5cd7d5d96c8874117891b2c92a036f96918e66c102bc698ae77542c186f981",
       "chats": [
+        "2"
       ]
     }
   ],
   "chats": [
-    
+    {
+      "id": "1",
+      "usersIDs": [
+        "002",
+        "001"
+      ],
+      "messages": [
+        {
+          "chatID": "1",
+          "userID": "002",
+          "text": "Salve",
+          "edited": false,
+          "deleted": false
+        },
+        {
+          "chatID": "1",
+          "userID": "001",
+          "text": "Eae, como que tamo?",
+          "edited": false,
+          "deleted": false
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "usersIDs": [
+        "001",
+        "pedrao123"
+      ],
+      "messages": [
+        {
+          "chatID": "2",
+          "userID": "001",
+          "text": "Eae",
+          "edited": false,
+          "deleted": false
+        },
+        {
+          "chatID": "2",
+          "userID": "pedrao123",
+          "text": "Aoba",
+          "edited": false,
+          "deleted": false
+        }
+      ]
+    }
   ]
 }

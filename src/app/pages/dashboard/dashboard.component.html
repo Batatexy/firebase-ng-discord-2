@@ -19,7 +19,6 @@
                     </p>
                     
                 </div>
-
             </div>
             
 
@@ -56,7 +55,16 @@
     </section>
 
     <section id="messages" class="d-flex flex-column justify-content-between w-100">
-        
+
+        @if (getChatID() == 'null' || getChatID() == '0')
+        {
+            <div class="d-flex justify-content-center">
+               
+                <img id="welcome-image" src="../../../assets/images/welcome.png">
+
+            </div>
+        }
+
         <div id="history-messages" class="pe-2 ps-2 w-100">
 
                 @for (chat of getFriendsList(); track $index) 
@@ -81,16 +89,6 @@
                     
                 }
             }
-
-
-
-
-           
-
-
-
-
-
         </div>
 
         <div id="send-message">
